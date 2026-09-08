@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react"
 import {
   useRooms,
+  useBookings,
   useCreateBooking,
   useCreateMultipleBookings,
   useUpdateBooking,
@@ -10,6 +11,7 @@ import {
 import { GuestSelector } from "./GuestSelector"
 import { BOOKING_SOURCES, BOOKING_STATUSES } from "@/constants/booking"
 import { useHotelSettings } from "@/hooks/useHotelSettings"
+import { getRoomConflict, getUnavailableRoomIds } from "@/lib/bookingConflicts"
 import type { BookingWithDetails, BookingSource, GuestRow } from "@/types/booking"
 import {
   X,
@@ -26,6 +28,7 @@ import {
   Utensils,
   RotateCcw,
   Check,
+  Ban,
 } from "lucide-react"
 
 interface BookingModalProps {
@@ -46,6 +49,7 @@ export function BookingModal({
   const isEditing = Boolean(initialBooking)
 
   const { data: rooms = [], isLoading: isLoadingRooms } = useRooms()
+  const { data: allBookings = [] } = useBookings()
   const { currencySymbol, formatPrice } = useHotelSettings()
   const createBookingMutation = useCreateBooking()
   const createMultipleBookingsMutation = useCreateMultipleBookings()
@@ -79,6 +83,17 @@ export function BookingModal({
     const diff = Math.ceil((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24))
     return diff > 0 ? diff : 1
   }, [checkIn, checkOut])
+
+  // Conflict detection: Get IDs of rooms that are already booked for the selected dates
+  const unavailableRoomIds = useMemo(() => {
+    return getUnavailableRoomIds(
+      rooms.map((r) => r.id),
+      checkIn,
+      checkOut,
+      allBookings,
+      initialBooking?.id
+    )
+  }, [rooms, checkIn, checkOut, allBookings, initialBooking?.id])
 
   // Calculate base room price
   const calculatedBaseRoomPrice = useMemo(() => {
@@ -135,28 +150,30 @@ export function BookingModal({
         setSelectedGuest(null)
         setGuestId("")
       }
-      const firstRoomId = rooms[0]?.id || ""
-      setSingleRoomId(firstRoomId)
-      setSelectedRoomIds(firstRoomId ? [firstRoomId] : [])
-      setCheckIn(initialDates?.check_in || getTodayString())
-      setCheckOut(initialDates?.check_out || getTomorrowString())
+      const initialIn = initialDates?.check_in || getTodayString()
+      const initialOut = initialDates?.check_out || getTomorrowString()
+      setCheckIn(initialIn)
+      setCheckOut(initialOut)
+
+      // Find first room that isn't booked for default dates
+      const unavail = getUnavailableRoomIds(
+        rooms.map((r) => r.id),
+        initialIn,
+        initialOut,
+        allBookings
+      )
+      const firstAvailableRoom = rooms.find((r) => !unavail.includes(r.id)) || rooms[0]
+      const defaultRoomId = firstAvailableRoom?.id || ""
+
+      setSingleRoomId(defaultRoomId)
+      setSelectedRoomIds(defaultRoomId ? [defaultRoomId] : [])
       setSource("direct")
       setStatus("confirmed")
       setNotes("")
       setExtraCharges(0)
       setIsManualPriceOverridden(false)
     }
-  }, [isOpen, initialBooking, initialDates, initialGuest, rooms])
-
-  // Default room selection when rooms load
-  useEffect(() => {
-    if (!singleRoomId && rooms.length > 0) {
-      setSingleRoomId(rooms[0].id)
-      if (selectedRoomIds.length === 0) {
-        setSelectedRoomIds([rooms[0].id])
-      }
-    }
-  }, [rooms, singleRoomId, selectedRoomIds])
+  }, [isOpen, initialBooking, initialDates, initialGuest, rooms, allBookings])
 
   if (!isOpen) return null
 
@@ -172,6 +189,15 @@ export function BookingModal({
   }
 
   const toggleRoomSelection = (roomId: string) => {
+    if (unavailableRoomIds.includes(roomId)) {
+      const conflict = getRoomConflict(roomId, checkIn, checkOut, allBookings, initialBooking?.id)
+      setErrorMessage(
+        `Room unavailable: ${conflict.message || "already booked for the selected dates."}`
+      )
+      return
+    }
+
+    setErrorMessage(null)
     if (selectedRoomIds.includes(roomId)) {
       if (selectedRoomIds.length > 1) {
         setSelectedRoomIds(selectedRoomIds.filter((id) => id !== roomId))
@@ -213,6 +239,18 @@ export function BookingModal({
     if (checkOut <= checkIn) {
       setErrorMessage("Check-out date must be strictly after check-in date.")
       return
+    }
+
+    // Comprehensive Room Conflict Validation
+    const targetRoomIds = isEditing ? [singleRoomId] : selectedRoomIds
+    for (const rId of targetRoomIds) {
+      const conflict = getRoomConflict(rId, checkIn, checkOut, allBookings, initialBooking?.id)
+      if (conflict.hasConflict) {
+        setErrorMessage(
+          `Booking Conflict: ${conflict.message}. Please select available dates or an unreserved room.`
+        )
+        return
+      }
     }
 
     try {
@@ -325,7 +363,7 @@ export function BookingModal({
             <p className="text-xs text-slate-500">
               {isEditing
                 ? "Update reservation details, pricing, or status"
-                : "Reserve one or multiple rooms for a guest with customized pricing"}
+                : "Reserve room(s) with live conflict prevention and price customization"}
             </p>
           </div>
           <button
@@ -339,34 +377,79 @@ export function BookingModal({
 
         {/* Error notification */}
         {errorMessage && (
-          <div className="mx-6 mt-4 flex items-start gap-2.5 rounded-lg border border-red-200 bg-red-50 p-3 text-xs text-red-700 shrink-0">
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-500" />
+          <div className="mx-6 mt-4 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800 shrink-0">
+            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-600" />
             <span>{errorMessage}</span>
           </div>
         )}
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="space-y-4 px-6 py-4 overflow-y-auto flex-1">
-          {/* Guest Selector (autocomplete + inline create) */}
+          {/* 1. Guest Selector (autocomplete + inline create) */}
           <GuestSelector
             selectedGuestId={guestId}
             onSelectGuest={handleGuestSelect}
             selectedGuest={selectedGuest}
           />
 
-          {/* Room Selection */}
+          {/* 2. Check-in and Check-out dates (Placed first so room availability dynamically updates) */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
+                <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                Check-in Date <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                required
+                value={checkIn}
+                onChange={(e) => {
+                  setCheckIn(e.target.value)
+                  setErrorMessage(null)
+                }}
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
+                <Calendar className="h-3.5 w-3.5 text-slate-400" />
+                Check-out Date <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="date"
+                required
+                value={checkOut}
+                min={checkIn}
+                onChange={(e) => {
+                  setCheckOut(e.target.value)
+                  setErrorMessage(null)
+                }}
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+          </div>
+
+          {/* 3. Room Selection with Live Conflict Prevention */}
           <div>
             <div className="mb-1.5 flex items-center justify-between">
               <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
                 <BedDouble className="h-3.5 w-3.5 text-slate-400" />
-                {isEditing ? "Assigned Room" : "Select Room(s) for this Guest"}{" "}
+                {isEditing ? "Assigned Room" : "Select Room(s) for this Stay"}{" "}
                 <span className="text-red-500">*</span>
               </label>
-              {!isEditing && selectedRoomIds.length > 1 && (
-                <span className="text-[11px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                  {selectedRoomIds.length} rooms selected
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                {!isEditing && selectedRoomIds.length > 1 && (
+                  <span className="text-[11px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                    {selectedRoomIds.length} rooms selected
+                  </span>
+                )}
+                {unavailableRoomIds.length > 0 && (
+                  <span className="text-[11px] font-medium text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                    {unavailableRoomIds.length} booked for dates
+                  </span>
+                )}
+              </div>
             </div>
 
             {isLoadingRooms ? (
@@ -395,40 +478,79 @@ export function BookingModal({
               <select
                 required
                 value={singleRoomId}
-                onChange={(e) => setSingleRoomId(e.target.value)}
+                onChange={(e) => {
+                  setSingleRoomId(e.target.value)
+                  setErrorMessage(null)
+                }}
                 className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
               >
-                {rooms.map((room) => (
-                  <option key={room.id} value={room.id}>
-                    {room.name} (Cap: {room.capacity}, {currencySymbol}{room.base_rate}/night)
-                  </option>
-                ))}
+                {rooms.map((room) => {
+                  const isUnavailable = unavailableRoomIds.includes(room.id)
+                  return (
+                    <option
+                      key={room.id}
+                      value={room.id}
+                      disabled={isUnavailable}
+                      className={isUnavailable ? "text-slate-400 bg-slate-100 italic" : ""}
+                    >
+                      {room.name} (Cap: {room.capacity}, {currencySymbol}{room.base_rate}/night)
+                      {isUnavailable ? " — [UNAVAILABLE: Already Booked]" : ""}
+                    </option>
+                  )
+                })}
               </select>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 border border-slate-200 rounded-xl p-2.5 bg-slate-50/50 max-h-40 overflow-y-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 border border-slate-200 rounded-xl p-2.5 bg-slate-50/50 max-h-48 overflow-y-auto">
                 {rooms.map((room) => {
                   const isSelected = selectedRoomIds.includes(room.id)
+                  const isUnavailable = unavailableRoomIds.includes(room.id)
+                  const conflict = isUnavailable
+                    ? getRoomConflict(room.id, checkIn, checkOut, allBookings, initialBooking?.id)
+                    : null
+
                   return (
                     <div
                       key={room.id}
                       onClick={() => toggleRoomSelection(room.id)}
-                      className={`cursor-pointer flex items-center justify-between p-2 rounded-lg border text-xs transition-all ${
-                        isSelected
-                          ? "bg-primary text-primary-foreground border-primary shadow-xs"
-                          : "bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                      title={conflict?.message || ""}
+                      className={`relative flex items-center justify-between p-2.5 rounded-lg border text-xs transition-all ${
+                        isUnavailable
+                          ? "bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-75"
+                          : isSelected
+                          ? "cursor-pointer bg-primary text-primary-foreground border-primary shadow-xs"
+                          : "cursor-pointer bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         <div
                           className={`w-4 h-4 rounded flex items-center justify-center border text-[10px] ${
-                            isSelected
+                            isUnavailable
+                              ? "border-rose-300 bg-rose-50 text-rose-500"
+                              : isSelected
                               ? "bg-white text-primary border-white"
                               : "border-slate-300 bg-white"
                           }`}
                         >
-                          {isSelected && <Check className="h-3 w-3" />}
+                          {isUnavailable ? (
+                            <Ban className="h-3 w-3" />
+                          ) : isSelected ? (
+                            <Check className="h-3 w-3" />
+                          ) : null}
                         </div>
-                        <span className="font-semibold">{room.name}</span>
+                        <div>
+                          <span
+                            className={`font-semibold ${
+                              isUnavailable ? "line-through text-slate-500" : ""
+                            }`}
+                          >
+                            {room.name}
+                          </span>
+                          {isUnavailable && (
+                            <span className="block text-[10px] text-rose-600 font-normal">
+                              Booked for dates
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <span className="font-mono text-[11px] opacity-90">
                         {currencySymbol}{room.base_rate}/nt
@@ -440,39 +562,7 @@ export function BookingModal({
             )}
           </div>
 
-          {/* Check-in and Check-out dates */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
-                <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                Check-in Date <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                required
-                value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
-
-            <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
-                <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                Check-out Date <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="date"
-                required
-                value={checkOut}
-                min={checkIn}
-                onChange={(e) => setCheckOut(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
-          </div>
-
-          {/* Pricing and Manual Cost Alteration (Food, Beverage, Extras) */}
+          {/* 4. Pricing and Manual Cost Alteration (Food, Beverage, Extras) */}
           <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
@@ -559,7 +649,7 @@ export function BookingModal({
             </div>
           </div>
 
-          {/* Source & Status */}
+          {/* 5. Source & Status */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
@@ -598,7 +688,7 @@ export function BookingModal({
             </div>
           </div>
 
-          {/* Notes */}
+          {/* 6. Notes */}
           <div>
             <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-600">
               <FileText className="h-3.5 w-3.5 text-slate-400" />
