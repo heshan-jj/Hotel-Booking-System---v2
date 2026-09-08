@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -19,6 +19,7 @@ export type Database = {
           check_in: string
           check_out: string
           created_at: string
+          extra_charges: number
           guest_id: string
           ical_uid: string | null
           id: string
@@ -26,11 +27,13 @@ export type Database = {
           room_id: string
           source: Database["public"]["Enums"]["booking_source"]
           status: string
+          total_price: number
         }
         Insert: {
           check_in: string
           check_out: string
           created_at?: string
+          extra_charges?: number
           guest_id: string
           ical_uid?: string | null
           id?: string
@@ -38,11 +41,13 @@ export type Database = {
           room_id: string
           source: Database["public"]["Enums"]["booking_source"]
           status?: string
+          total_price?: number
         }
         Update: {
           check_in?: string
           check_out?: string
           created_at?: string
+          extra_charges?: number
           guest_id?: string
           ical_uid?: string | null
           id?: string
@@ -50,6 +55,7 @@ export type Database = {
           room_id?: string
           source?: Database["public"]["Enums"]["booking_source"]
           status?: string
+          total_price?: number
         }
         Relationships: [
           {
@@ -104,6 +110,7 @@ export type Database = {
       hotel_settings: {
         Row: {
           created_at: string
+          currency: string
           id: number
           logo_url: string | null
           name: string
@@ -113,6 +120,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          currency?: string
           id?: number
           logo_url?: string | null
           name?: string
@@ -122,6 +130,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          currency?: string
           id?: number
           logo_url?: string | null
           name?: string

@@ -6,6 +6,7 @@ import {
 } from "@/hooks/useBookingsData"
 import type { GuestRow } from "@/types/booking"
 import { GuestModal } from "@/components/guests/GuestModal"
+import { BookingModal } from "@/components/bookings/BookingModal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -28,6 +29,7 @@ import {
   CreditCard,
   Globe,
   CalendarDays,
+  CalendarPlus,
   FileText,
   Loader2,
   X,
@@ -39,6 +41,8 @@ export function GuestsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedGuest, setSelectedGuest] = useState<GuestRow | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
+  const [guestForBooking, setGuestForBooking] = useState<GuestRow | null>(null)
   const [deletingGuestId, setDeletingGuestId] = useState<string | null>(null)
   const [guestToDelete, setGuestToDelete] = useState<GuestRow | null>(null)
 
@@ -328,7 +332,21 @@ export function GuestsPage() {
 
                       {/* Actions */}
                       <TableCell className="py-4 pr-6 text-right">
-                        <div className="flex items-center justify-end gap-1">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setGuestForBooking(guest)
+                              setIsBookingModalOpen(true)
+                            }}
+                            className="h-8 px-2.5 gap-1.5 rounded-lg text-xs font-semibold text-primary border-primary/20 hover:bg-primary/5 hover:border-primary/40 shadow-xs"
+                            title="Manually book rooms for this guest"
+                          >
+                            <CalendarPlus className="h-3.5 w-3.5" />
+                            <span>Book Rooms</span>
+                          </Button>
+
                           <Button
                             variant="ghost"
                             size="sm"
@@ -364,6 +382,16 @@ export function GuestsPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         guest={selectedGuest}
+      />
+
+      {/* Booking Modal (for manual room booking for a guest) */}
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => {
+          setIsBookingModalOpen(false)
+          setGuestForBooking(null)
+        }}
+        initialGuest={guestForBooking}
       />
 
       {/* Delete Confirmation Modal */}

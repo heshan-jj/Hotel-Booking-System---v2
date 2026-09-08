@@ -20,9 +20,14 @@ if (typeof window !== "undefined") {
   }
 }
 
+import { getCurrencySymbol, formatCurrencyAmount } from "@/constants/currencies"
+
 interface HotelSettingsContextType {
   settings: HotelSettingsRow | null | undefined
   isLoading: boolean
+  currency: string
+  currencySymbol: string
+  formatPrice: (amount: number | string | null | undefined) => string
   updateSettings: (updates: HotelSettingsUpdate) => Promise<HotelSettingsRow>
   isUpdating: boolean
 }
@@ -93,11 +98,19 @@ export function HotelSettingsProvider({ children }: { children: React.ReactNode 
     )
   }
 
+  const currency = settings?.currency || "USD"
+  const currencySymbol = getCurrencySymbol(currency)
+  const formatPrice = (amount: number | string | null | undefined) =>
+    formatCurrencyAmount(amount, currency)
+
   return (
     <HotelSettingsContext.Provider
       value={{
         settings,
         isLoading: isSettingsLoading,
+        currency,
+        currencySymbol,
+        formatPrice,
         updateSettings: updateMutation.mutateAsync,
         isUpdating: updateMutation.isPending,
       }}

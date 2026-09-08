@@ -29,7 +29,9 @@ import {
   CheckCircle2,
   X,
   Layers,
+  Coins,
 } from "lucide-react"
+import { SUPPORTED_CURRENCIES, getCurrencySymbol } from "@/constants/currencies"
 
 // Curated theme color presets
 const COLOR_PRESETS = [
@@ -58,8 +60,9 @@ export function OnboardingPage() {
   // Wizard Navigation
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1)
 
-  // Step 1: Hotel Name & Logo
+  // Step 1: Hotel Name & Logo & Currency
   const [hotelName, setHotelName] = useState("")
+  const [currency, setCurrency] = useState("USD")
   const [logoUrl, setLogoUrl] = useState<string | null>(null)
   const [isUploadingLogo, setIsUploadingLogo] = useState(false)
   const [logoUploadError, setLogoUploadError] = useState<string | null>(null)
@@ -83,6 +86,7 @@ export function OnboardingPage() {
       if (settings.name) setHotelName(settings.name)
       if (settings.logo_url) setLogoUrl(settings.logo_url)
       if (settings.theme_primary_color) setThemeColor(settings.theme_primary_color)
+      if (settings.currency) setCurrency(settings.currency)
     }
   }, [settings])
 
@@ -213,6 +217,7 @@ export function OnboardingPage() {
         name: finalHotelName,
         logo_url: logoUrl,
         theme_primary_color: themeColor,
+        currency,
         onboarding_completed: true,
       })
 
@@ -324,6 +329,28 @@ export function OnboardingPage() {
                   />
                   <p className="mt-1 text-xs text-slate-500">
                     This name will appear on all reports, calendar headings, and guest communications.
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="hotelCurrency" className="text-slate-200 flex items-center gap-1.5">
+                    <Coins className="h-4 w-4 text-emerald-400" />
+                    Base Currency <span className="text-blue-400">*</span>
+                  </Label>
+                  <select
+                    id="hotelCurrency"
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="mt-2 flex h-10 w-full rounded-md border border-slate-700 bg-slate-800/80 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    {SUPPORTED_CURRENCIES.map((c) => (
+                      <option key={c.code} value={c.code} className="bg-slate-900 text-white">
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="mt-1 text-xs text-slate-500">
+                    All room rates, reservation pricing, and extra charges will use this currency.
                   </p>
                 </div>
 
@@ -590,7 +617,7 @@ export function OnboardingPage() {
 
                     <div>
                       <Label htmlFor="roomRate" className="text-slate-200">
-                        Base Rate ($ / Night)
+                        Base Rate ({getCurrencySymbol(currency)} / Night)
                       </Label>
                       <Input
                         id="roomRate"
@@ -602,18 +629,18 @@ export function OnboardingPage() {
                         className="mt-1 border-slate-700 bg-slate-800 text-white focus-visible:ring-blue-500"
                       />
                     </div>
+                  </div>
 
-                    <div className="flex items-end">
-                      <Button
-                        type="button"
-                        onClick={handleAddRoom}
-                        disabled={!roomNameInput.trim()}
-                        className="w-full gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white"
-                      >
-                        <Plus className="h-4 w-4" />
-                        <span>Add Room</span>
-                      </Button>
-                    </div>
+                  <div className="mt-4 flex justify-end">
+                    <Button
+                      type="button"
+                      onClick={handleAddRoom}
+                      disabled={!roomNameInput.trim()}
+                      className="gap-2 bg-blue-600 hover:bg-blue-500 text-white shadow-md shadow-blue-500/20"
+                    >
+                      <Plus className="h-4 w-4" />
+                      <span>Add Room</span>
+                    </Button>
                   </div>
                 </div>
 
@@ -645,7 +672,7 @@ export function OnboardingPage() {
                             <div>
                               <p className="font-semibold text-white">{room.name}</p>
                               <p className="text-xs text-slate-400">
-                                Max {room.capacity} guests • ${room.base_rate.toFixed(2)}/night
+                                Max {room.capacity} guests • {getCurrencySymbol(currency)}{room.base_rate.toFixed(2)}/night
                               </p>
                             </div>
                           </div>

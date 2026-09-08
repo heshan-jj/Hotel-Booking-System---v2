@@ -40,6 +40,8 @@ export function useBookings() {
           check_in,
           check_out,
           status,
+          total_price,
+          extra_charges,
           ical_uid,
           notes,
           created_at,
@@ -225,6 +227,30 @@ export function useCreateBooking() {
 
       if (error) throw error
       return data as unknown as BookingWithDetails
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: BOOKINGS_QUERY_KEY })
+    },
+  })
+}
+
+// 5b. Create Multiple Bookings (for one guest booking multiple rooms)
+export function useCreateMultipleBookings() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (newBookings: BookingInsert[]) => {
+      const { data, error } = await supabase
+        .from("bookings")
+        .insert(newBookings)
+        .select(`
+          *,
+          guest:guests(*),
+          room:rooms(*)
+        `)
+
+      if (error) throw error
+      return (data as unknown as BookingWithDetails[]) ?? []
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: BOOKINGS_QUERY_KEY })

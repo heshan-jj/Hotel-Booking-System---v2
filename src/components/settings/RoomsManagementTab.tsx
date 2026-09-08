@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import {
   useRooms,
   useCreateRoom,
@@ -6,6 +6,7 @@ import {
   useDeleteRoom,
   useCreateDefaultRoom,
 } from "@/hooks/useBookingsData"
+import { useHotelSettings } from "@/hooks/useHotelSettings"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -33,7 +34,6 @@ import {
   Edit2,
   Trash2,
   Users,
-  DollarSign,
   Loader2,
   AlertCircle,
   Sparkles,
@@ -41,6 +41,7 @@ import {
 
 export function RoomsManagementTab() {
   const { data: rooms = [], isLoading } = useRooms()
+  const { currencySymbol, formatPrice } = useHotelSettings()
   const createRoomMutation = useCreateRoom()
   const updateRoomMutation = useUpdateRoom()
   const deleteRoomMutation = useDeleteRoom()
@@ -228,9 +229,8 @@ export function RoomsManagementTab() {
                         </Badge>
                       </TableCell>
                       <TableCell className="font-medium text-slate-900 text-sm">
-                        <span className="flex items-center text-emerald-700 font-semibold">
-                          <DollarSign className="h-3.5 w-3.5 mr-0.5" />
-                          {Number(room.base_rate).toFixed(2)}
+                        <span className="text-emerald-700 font-semibold">
+                          {formatPrice(room.base_rate)}
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
@@ -315,7 +315,7 @@ export function RoomsManagementTab() {
 
                 <div>
                   <Label htmlFor="rateInput" className="text-xs font-semibold text-slate-700">
-                    Base Rate ($ / Night) <span className="text-red-500">*</span>
+                    Base Rate ({currencySymbol} / Night) <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="rateInput"

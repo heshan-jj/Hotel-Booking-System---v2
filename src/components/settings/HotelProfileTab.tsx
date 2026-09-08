@@ -22,7 +22,9 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
+  Coins,
 } from "lucide-react"
+import { SUPPORTED_CURRENCIES } from "@/constants/currencies"
 
 const COLOR_PRESETS = [
   { name: "Slate Midnight", hex: "#0f172a" },
@@ -41,6 +43,7 @@ export function HotelProfileTab() {
   const [name, setName] = useState("")
   const [logoUrl, setLogoUrl] = useState<string | null>(null)
   const [themeColor, setThemeColor] = useState("#0f172a")
+  const [currency, setCurrency] = useState("USD")
 
   const [isUploadingLogo, setIsUploadingLogo] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
@@ -52,6 +55,7 @@ export function HotelProfileTab() {
       if (settings.name) setName(settings.name)
       if (settings.logo_url !== undefined) setLogoUrl(settings.logo_url)
       if (settings.theme_primary_color) setThemeColor(settings.theme_primary_color)
+      if (settings.currency) setCurrency(settings.currency)
     }
   }, [settings])
 
@@ -103,6 +107,7 @@ export function HotelProfileTab() {
         name: name.trim(),
         logo_url: logoUrl,
         theme_primary_color: themeColor,
+        currency,
       })
 
       setSaveSuccess(true)
@@ -153,6 +158,28 @@ export function HotelProfileTab() {
               placeholder="e.g. Grand Haven Hotel"
               className="mt-2 max-w-lg"
             />
+          </div>
+
+          <div>
+            <Label htmlFor="profileCurrency" className="text-slate-800 flex items-center gap-1.5">
+              <Coins className="h-4 w-4 text-emerald-600" />
+              Base Currency <span className="text-red-500">*</span>
+            </Label>
+            <p className="mt-0.5 text-xs text-slate-500">
+              Selected currency symbol will be used across room rates, bookings, and billing.
+            </p>
+            <select
+              id="profileCurrency"
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              className="mt-2 flex h-10 w-full max-w-lg rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-xs focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              {SUPPORTED_CURRENCIES.map((curr) => (
+                <option key={curr.code} value={curr.code}>
+                  {curr.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>

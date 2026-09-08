@@ -6,6 +6,7 @@ import {
   useDeleteBooking,
 } from "@/hooks/useBookingsData"
 import { BookingModal } from "@/components/bookings/BookingModal"
+import { useHotelSettings } from "@/hooks/useHotelSettings"
 import { BOOKING_SOURCES, BOOKING_STATUSES } from "@/constants/booking"
 import type { BookingWithDetails, BookingSource } from "@/types/booking"
 import { Button } from "@/components/ui/button"
@@ -37,6 +38,7 @@ import {
 export function BookingsPage() {
   const { data: bookings = [], isLoading, isError, error, refetch } = useBookings()
   const { data: rooms = [] } = useRooms()
+  const { formatPrice } = useHotelSettings()
   const updateBookingMutation = useUpdateBooking()
   const deleteBookingMutation = useDeleteBooking()
 
@@ -316,6 +318,7 @@ export function BookingsPage() {
                     <TableHead className="text-xs font-semibold">Nights</TableHead>
                     <TableHead className="text-xs font-semibold">Source</TableHead>
                     <TableHead className="text-xs font-semibold">Status</TableHead>
+                    <TableHead className="text-xs font-semibold">Price</TableHead>
                     <TableHead className="text-right text-xs font-semibold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -399,6 +402,18 @@ export function BookingsPage() {
                           >
                             {booking.status.replace("_", " ")}
                           </Badge>
+                        </TableCell>
+
+                        {/* Total Price & Extras */}
+                        <TableCell>
+                          <div className="text-xs font-semibold text-slate-900">
+                            {formatPrice(booking.total_price)}
+                          </div>
+                          {Number(booking.extra_charges || 0) > 0 && (
+                            <div className="text-[10px] text-amber-600 font-medium">
+                              +{formatPrice(booking.extra_charges)} extras
+                            </div>
+                          )}
                         </TableCell>
 
                         {/* Actions */}
