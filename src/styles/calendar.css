@@ -128,3 +128,35 @@
   font-weight: 600;
   padding: 2px 4px;
 }
+
+@media (max-width: 640px) {
+  .rbc-calendar {
+    min-height: 520px;
+  }
+  .rbc-toolbar {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+  .rbc-toolbar-label {
+    width: 100%;
+    order: -1;
+    text-align: center;
+    font-size: 0.9375rem;
+    margin-bottom: 0.25rem;
+  }
+  .rbc-btn-group {
+    scale: 0.95;
+  }
+  .rbc-toolbar button {
+    padding: 3px 8px;
+    font-size: 0.6875rem;
+  }
+  .rbc-header {
+    font-size: 0.625rem;
+    padding: 6px 2px;
+  }
+  .rbc-date-cell {
+    padding: 3px 4px;
+    font-size: 0.6875rem;
+  }
+}

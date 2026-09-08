@@ -178,14 +178,14 @@ export function RevenuePage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-2 max-w-full overflow-x-auto pb-1 sm:pb-0">
           {/* iOS Segmented Time Switcher */}
-          <div className="inline-flex h-8 items-center justify-center rounded-lg bg-slate-200/60 dark:bg-zinc-800/70 p-0.5 text-slate-600 dark:text-zinc-400 border border-black/[0.04] select-none">
+          <div className="inline-flex h-8 shrink-0 items-center justify-center rounded-lg bg-slate-200/60 dark:bg-zinc-800/70 p-0.5 text-slate-600 dark:text-zinc-400 border border-black/[0.04] select-none">
             {(
               [
                 { id: "all", label: "All Time" },
                 { id: "this_month", label: "This Month" },
-                { id: "last_30", label: "Last 30 Days" },
+                { id: "last_30", label: "Last 30d" },
                 { id: "this_year", label: "This Year" },
               ] as const
             ).map((t) => (
@@ -193,7 +193,7 @@ export function RevenuePage() {
                 key={t.id}
                 type="button"
                 onClick={() => setTimeRange(t.id)}
-                className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-medium tracking-tight transition-all duration-150 active:scale-[0.98] ${
+                className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium tracking-tight transition-all duration-150 active:scale-[0.98] ${
                   timeRange === t.id
                     ? "bg-white dark:bg-zinc-900 text-slate-900 dark:text-white shadow-ios-sm font-semibold"
                     : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200"

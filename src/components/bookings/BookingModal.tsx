@@ -352,10 +352,13 @@ export function BookingModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/40 p-4 backdrop-blur-sm transition-opacity">
-      <div className="relative w-full max-w-xl rounded-2xl border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-zinc-900 shadow-2xl transition-all max-h-[92vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-0 sm:p-4 backdrop-blur-sm transition-opacity">
+      <div className="relative w-full sm:max-w-xl rounded-t-[28px] sm:rounded-2xl border-t sm:border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-zinc-900 shadow-2xl transition-all max-h-[92vh] sm:max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
+        {/* iOS Pull indicator for mobile */}
+        <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-zinc-700 mx-auto mt-2.5 mb-1 sm:hidden shrink-0" />
+
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-black/[0.05] dark:border-white/[0.06] px-6 py-3.5 shrink-0 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md select-none">
+        <div className="flex items-center justify-between border-b border-black/[0.05] dark:border-white/[0.06] px-5 sm:px-6 py-3 shrink-0 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md select-none">
           <div>
             <h3 className="text-base font-semibold text-slate-900 dark:text-zinc-100 tracking-tight">
               {isEditing ? "Edit Reservation" : "Create New Booking"}
@@ -377,14 +380,14 @@ export function BookingModal({
 
         {/* Error notification */}
         {errorMessage && (
-          <div className="mx-6 mt-3 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50/80 p-2.5 text-xs text-rose-800 shrink-0 shadow-ios-sm">
+          <div className="mx-4 sm:mx-6 mt-3 flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50/80 p-2.5 text-xs text-rose-800 shrink-0 shadow-ios-sm">
             <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-rose-600" />
             <span>{errorMessage}</span>
           </div>
         )}
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="space-y-3.5 px-6 py-4 overflow-y-auto flex-1">
+        <form onSubmit={handleSubmit} className="space-y-3.5 px-4 sm:px-6 py-4 overflow-y-auto flex-1 pb-6 sm:pb-4">
           {/* 1. Guest Selector (autocomplete + inline create) */}
           <GuestSelector
             selectedGuestId={guestId}

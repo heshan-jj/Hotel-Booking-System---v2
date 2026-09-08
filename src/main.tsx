@@ -12,3 +12,17 @@ createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </StrictMode>,
 )
+
+// Register PWA service worker in production or supporting browsers
+if ("serviceWorker" in navigator && !window.location.host.startsWith("localhost:5173--disabled")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => {
+        console.log("Hotel PMS PWA Service Worker registered:", reg.scope)
+      })
+      .catch((err) => {
+        console.log("Service Worker registration failed:", err)
+      })
+  })
+}
