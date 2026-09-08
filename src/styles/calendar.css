@@ -1,0 +1,121 @@
+@import "react-big-calendar/lib/css/react-big-calendar.css";
+
+/* Modern UI Overrides for react-big-calendar */
+.rbc-calendar {
+  font-family: inherit;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  min-height: 650px;
+}
+
+.rbc-header {
+  padding: 10px 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.rbc-toolbar {
+  padding: 1rem 1.25rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.rbc-btn-group {
+  display: inline-flex;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.rbc-toolbar button {
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 1px 2px 0 rgba(37, 99, 235, 0.2);
+}
+
+.rbc-month-view {
+  border: none;
+}
+
+.rbc-day-bg + .rbc-day-bg,
+.rbc-month-row + .rbc-month-row {
+  border-color: #f1f5f9;
+}
+
+.rbc-off-range-bg {
+  background-color: #f8fafc;
+}
+
+.rbc-today {
+  background-color: #eff6ff !important;
+}
+
+.rbc-date-cell {
+  padding: 6px 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.rbc-now .rbc-date-cell {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.rbc-event {
+  border: none !important;
+  margin: 1px 2px !important;
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.rbc-event:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.rbc-event-label {
+  display: none;
+}
+
+.rbc-show-more {
+  background-color: transparent;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 4px;
+}
