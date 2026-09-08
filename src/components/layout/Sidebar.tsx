@@ -52,7 +52,7 @@ export function Sidebar({ className = "", onItemClick, onClose, isMobileDrawer =
               />
             </div>
           ) : (
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0071e3] text-white shadow-ios-sm">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-ios-sm">
               <Hotel className="h-4 w-4" />
             </div>
           )}
@@ -61,7 +61,7 @@ export function Sidebar({ className = "", onItemClick, onClose, isMobileDrawer =
             <h2 className="truncate text-xs font-semibold tracking-tight text-slate-900 dark:text-white">
               {settings?.name || "Hotel PMS"}
             </h2>
-            <p className="text-[10px] text-slate-400 dark:text-zinc-500 truncate font-medium">Property Management</p>
+            <p className="text-xs text-slate-400 dark:text-zinc-500 truncate font-medium">Property Management</p>
           </div>
         </div>
 
@@ -79,7 +79,7 @@ export function Sidebar({ className = "", onItemClick, onClose, isMobileDrawer =
 
       {/* Navigation Section */}
       <div className="flex-1 overflow-y-auto px-2.5 py-3">
-        <p className="px-2.5 pb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
+        <p className="px-2.5 pb-2 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-zinc-500">
           Main Menu
         </p>
         <nav className="space-y-1">
@@ -89,9 +89,9 @@ export function Sidebar({ className = "", onItemClick, onClose, isMobileDrawer =
               to={item.href}
               onClick={onItemClick}
               className={({ isActive }) =>
-                `flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium tracking-tight transition-all duration-150 active:scale-[0.98] ${
+                `flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium tracking-tight transition-all duration-150 active:scale-[0.98] ${
                   isActive
-                    ? "bg-[#0071e3]/10 text-[#0071e3] dark:text-[#3898ec] font-semibold shadow-xs"
+                    ? "bg-primary/10 text-primary font-semibold shadow-xs"
                     : "text-slate-600 dark:text-zinc-400 hover:bg-black/[0.035] dark:hover:bg-white/[0.04] hover:text-slate-900 dark:hover:text-zinc-100"
                 }`
               }
@@ -113,7 +113,7 @@ export function Sidebar({ className = "", onItemClick, onClose, isMobileDrawer =
             <p className="truncate text-xs font-medium text-slate-800 dark:text-zinc-200">
               {user?.email ?? "Staff Member"}
             </p>
-            <span className="inline-block rounded px-1.5 py-0.2 text-[9px] font-medium tracking-tight bg-[#0071e3]/10 text-[#0071e3] border border-[#0071e3]/20">
+            <span className="inline-block rounded px-1.5 py-0.5 text-xs font-medium tracking-tight bg-primary/10 text-primary border border-primary/20">
               Staff / Admin
             </span>
           </div>

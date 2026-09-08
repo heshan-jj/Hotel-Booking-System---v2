@@ -6,15 +6,27 @@ import { useHotelSettings } from "@/hooks/useHotelSettings"
 import { useAuth } from "@/contexts/AuthContext"
 import { LogOut, Menu } from "lucide-react"
 
+const ROUTE_TITLES: Record<string, string> = {
+  "/calendar": "Reservations Calendar",
+  "/bookings": "Bookings & Reservations",
+  "/revenue": "Revenue & Financials",
+  "/guests": "Guest Directory",
+  "/settings": "Hotel Settings",
+  "/onboarding": "Hotel Onboarding",
+}
+
 export function AppLayout() {
   const { settings } = useHotelSettings()
   const { user, signOut } = useAuth()
   const location = useLocation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  // Get current page name from path
-  const path = location.pathname.replace("/", "")
-  const pageTitle = path ? path.charAt(0).toUpperCase() + path.slice(1) : "Calendar"
+  // Declarative page title resolution
+  const currentPath = location.pathname
+  const pageTitle =
+    ROUTE_TITLES[currentPath] ||
+    currentPath.replace("/", "").replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) ||
+    "Dashboard"
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#f8f9fb] dark:bg-zinc-950 text-foreground">
@@ -77,7 +89,7 @@ export function AppLayout() {
 
           {/* Right Area: Status & Mobile Logout */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-zinc-900/80 px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-medium text-slate-600 dark:text-zinc-300 shadow-ios-sm">
+            <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-zinc-900/80 px-2 sm:px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-zinc-300 shadow-ios-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20" />
               <span className="truncate max-w-[100px] sm:max-w-[160px]">{settings?.name || "Hotel PMS"}</span>
             </div>

@@ -76,7 +76,7 @@ export function GuestSelector({
 
   return (
     <div className="space-y-1.5" ref={containerRef}>
-      <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
         Guest <span className="text-rose-500">*</span>
       </label>
 
@@ -84,12 +84,12 @@ export function GuestSelector({
       {currentGuest && !isCreatingNew ? (
         <div className="flex items-center justify-between rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-slate-50/80 dark:bg-zinc-800/60 p-2.5 shadow-ios-sm">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0071e3]/10 text-[#0071e3] font-semibold text-xs border border-[#0071e3]/20">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-xs border border-primary/20">
               {currentGuest.name ? currentGuest.name.charAt(0).toUpperCase() : <User className="h-4 w-4" />}
             </div>
             <div>
               <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100 tracking-tight">{currentGuest.name}</p>
-              <p className="text-[11px] text-slate-400 dark:text-zinc-500 font-normal">
+              <p className="text-xs text-slate-400 dark:text-zinc-500 font-normal">
                 {[currentGuest.phone, currentGuest.email].filter(Boolean).join(" • ") ||
                   "No contact details"}
               </p>
@@ -108,9 +108,9 @@ export function GuestSelector({
         </div>
       ) : isCreatingNew ? (
         /* Inline New Guest Creation Form */
-        <div className="rounded-xl border border-[#0071e3]/20 bg-[#0071e3]/[0.03] p-3.5 shadow-ios-sm">
+        <div className="rounded-xl border border-primary/20 bg-primary/[0.03] p-3.5 shadow-ios-sm">
           <div className="mb-2.5 flex items-center justify-between">
-            <h4 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0071e3]">
+            <h4 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
               <UserPlus className="h-3.5 w-3.5" />
               New Guest Profile
             </h4>
@@ -125,7 +125,7 @@ export function GuestSelector({
 
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">
+              <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-zinc-400">
                 Full Name <span className="text-rose-500">*</span>
               </label>
               <input
@@ -134,34 +134,34 @@ export function GuestSelector({
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder="e.g. Eleanor Vance"
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Phone</label>
+              <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-zinc-400">Phone</label>
               <input
                 type="tel"
                 value={newPhone}
                 onChange={(e) => setNewPhone(e.target.value)}
                 placeholder="+1 555-0199"
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Email</label>
+              <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-zinc-400">Email</label>
               <input
                 type="email"
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder="guest@example.com"
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">
+              <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-zinc-400">
                 Passport / ID Number
               </label>
               <input
@@ -169,29 +169,29 @@ export function GuestSelector({
                 value={newIdNumber}
                 onChange={(e) => setNewIdNumber(e.target.value)}
                 placeholder="N1234567"
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Nationality</label>
+              <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-zinc-400">Nationality</label>
               <input
                 type="text"
                 value={newNationality}
                 onChange={(e) => setNewNationality(e.target.value)}
                 placeholder="e.g. British"
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Guest Notes</label>
+              <label className="mb-1 block text-xs font-medium text-slate-600 dark:text-zinc-400">Guest Notes</label>
               <textarea
                 rows={2}
                 value={newNotes}
                 onChange={(e) => setNewNotes(e.target.value)}
                 placeholder="VIP preferences, allergies, dietary requirements..."
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
           </div>
@@ -208,7 +208,7 @@ export function GuestSelector({
               type="button"
               disabled={createGuestMutation.isPending || !newName.trim()}
               onClick={handleCreateGuest}
-              className="flex h-7 items-center gap-1.5 rounded-lg bg-[#0071e3] px-3 text-xs font-medium text-white shadow-ios-sm hover:bg-[#0077ed] active:scale-[0.98] disabled:opacity-50 transition-all"
+              className="flex h-7 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-medium text-primary-foreground shadow-ios-sm hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50 transition-all"
             >
               {createGuestMutation.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
               Save & Select Guest
@@ -231,7 +231,7 @@ export function GuestSelector({
                 setIsOpen(true)
               }}
               placeholder="Search guest by name, email, or phone..."
-              className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 py-1.5 pl-8 pr-8 text-xs tracking-tight text-foreground placeholder:text-slate-400 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+              className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 py-1.5 pl-8 pr-8 text-xs tracking-tight text-foreground placeholder:text-slate-400 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
             />
             {searchTerm && (
               <button
@@ -255,7 +255,7 @@ export function GuestSelector({
                   setNewName(searchTerm)
                   setIsOpen(false)
                 }}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-semibold text-[#0071e3] hover:bg-[#0071e3]/10 transition-colors"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
               >
                 <UserPlus className="h-3.5 w-3.5" />
                 <span>+ Create new guest {searchTerm ? `"${searchTerm}"` : ""}</span>
@@ -263,7 +263,7 @@ export function GuestSelector({
 
               {isSearching ? (
                 <div className="flex items-center justify-center gap-2 py-3 text-xs text-slate-400">
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#0071e3]" />
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
                   <span>Searching guests...</span>
                 </div>
               ) : guests.length === 0 ? (
@@ -283,18 +283,18 @@ export function GuestSelector({
                         setSearchTerm("")
                       }}
                       className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.04] ${
-                        isSelected ? "bg-[#0071e3]/10 text-[#0071e3]" : "text-slate-800 dark:text-zinc-200"
+                        isSelected ? "bg-primary/10 text-primary font-semibold" : "text-slate-800 dark:text-zinc-200"
                       }`}
                     >
                       <div>
                         <p className="font-semibold">{guest.name}</p>
-                        <p className="text-[10px] text-slate-400">
+                        <p className="text-xs text-slate-400">
                           {[guest.phone, guest.email, guest.nationality]
                             .filter(Boolean)
                             .join(" • ") || "No additional info"}
                         </p>
                       </div>
-                      {isSelected && <Check className="h-3.5 w-3.5 text-[#0071e3]" />}
+                      {isSelected && <Check className="h-3.5 w-3.5 text-primary" />}
                     </button>
                   )
                 })

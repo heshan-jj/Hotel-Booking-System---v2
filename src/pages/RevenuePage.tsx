@@ -165,7 +165,7 @@ export function RevenuePage() {
       {/* Top Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0071e3]/10 text-[#0071e3] border border-[#0071e3]/20 shadow-ios-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-ios-sm">
             <TrendingUp className="h-4.5 w-4.5" />
           </div>
           <div>
@@ -193,7 +193,7 @@ export function RevenuePage() {
                 key={t.id}
                 type="button"
                 onClick={() => setTimeRange(t.id)}
-                className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium tracking-tight transition-all duration-150 active:scale-[0.98] ${
+                className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-2 sm:px-2.5 py-1 text-xs font-medium tracking-tight transition-all duration-150 active:scale-[0.98] ${
                   timeRange === t.id
                     ? "bg-white dark:bg-zinc-900 text-slate-900 dark:text-white shadow-ios-sm font-semibold"
                     : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200"
@@ -221,7 +221,7 @@ export function RevenuePage() {
         {/* Total Gross Revenue */}
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
               <DollarSign className="h-3 w-3 text-emerald-500" />
               Total Revenue
             </span>
@@ -230,7 +230,7 @@ export function RevenuePage() {
           <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-zinc-100 font-mono">
             {formatPrice(metrics.totalRevenue)}
           </p>
-          <p className="text-[10px] text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-400 mt-0.5">
             Across {metrics.totalBookings} reservation{metrics.totalBookings === 1 ? "" : "s"}
           </p>
         </div>
@@ -238,22 +238,22 @@ export function RevenuePage() {
         {/* Average Daily Rate */}
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-[#0071e3] uppercase tracking-wider flex items-center gap-1">
+            <span className="text-xs font-semibold text-primary uppercase tracking-wider flex items-center gap-1">
               <Receipt className="h-3 w-3" />
               ADR (Per Night)
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-[#0071e3]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           </div>
-          <p className="mt-1 text-2xl font-bold tracking-tight text-[#0071e3] font-mono">
+          <p className="mt-1 text-2xl font-bold tracking-tight text-primary font-mono">
             {formatPrice(metrics.adr)}
           </p>
-          <p className="text-[10px] text-slate-400 mt-0.5">Average room rate achieved</p>
+          <p className="text-xs text-slate-400 mt-0.5">Average room rate achieved</p>
         </div>
 
         {/* Total Booked Nights */}
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
               <Calendar className="h-3 w-3 text-indigo-500" />
               Occupied Nights
             </span>
@@ -262,13 +262,13 @@ export function RevenuePage() {
           <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-zinc-100 font-mono">
             {metrics.totalNights}
           </p>
-          <p className="text-[10px] text-slate-400 mt-0.5">Total stay nights confirmed</p>
+          <p className="text-xs text-slate-400 mt-0.5">Total stay nights confirmed</p>
         </div>
 
         {/* F&B & Extras Revenue */}
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1">
+            <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1">
               <Utensils className="h-3 w-3" />
               Extras & F&B
             </span>
@@ -277,7 +277,7 @@ export function RevenuePage() {
           <p className="mt-1 text-2xl font-bold tracking-tight text-amber-600 dark:text-amber-400 font-mono">
             {formatPrice(metrics.extrasRevenue)}
           </p>
-          <p className="text-[10px] text-slate-400 mt-0.5">Add-ons, dining & mini-bar</p>
+          <p className="text-xs text-slate-400 mt-0.5">Add-ons, dining & mini-bar</p>
         </div>
       </div>
 
@@ -288,9 +288,9 @@ export function RevenuePage() {
           <CardHeader className="p-4 pb-2">
             <CardTitle className="text-sm font-semibold flex items-center justify-between">
               <span>Channel Yield Distribution</span>
-              <span className="text-[11px] font-normal text-slate-400">By booking source</span>
+              <span className="text-xs font-normal text-slate-400">By booking source</span>
             </CardTitle>
-            <CardDescription className="text-[11px]">
+            <CardDescription className="text-xs">
               Revenue contributions generated across connected channels
             </CardDescription>
           </CardHeader>
@@ -301,13 +301,13 @@ export function RevenuePage() {
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c.hex }} />
                     <span className="font-medium text-slate-700 dark:text-zinc-300">{c.label}</span>
-                    <span className="text-[10px] text-slate-400 font-mono">({c.count} bookings)</span>
+                    <span className="text-xs text-slate-400 font-mono">({c.count} bookings)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-slate-900 dark:text-zinc-100 font-mono">
                       {formatPrice(c.revenue)}
                     </span>
-                    <span className="text-[11px] text-slate-400 w-10 text-right font-mono">
+                    <span className="text-xs text-slate-400 w-10 text-right font-mono">
                       {c.percentage.toFixed(1)}%
                     </span>
                   </div>
@@ -333,9 +333,9 @@ export function RevenuePage() {
           <CardHeader className="p-4 pb-2">
             <CardTitle className="text-sm font-semibold flex items-center justify-between">
               <span>Room Yield Ranking</span>
-              <span className="text-[11px] font-normal text-slate-400">Top earning rooms</span>
+              <span className="text-xs font-normal text-slate-400">Top earning rooms</span>
             </CardTitle>
-            <CardDescription className="text-[11px]">
+            <CardDescription className="text-xs">
               Gross revenue generated grouped by individual room
             </CardDescription>
           </CardHeader>
@@ -354,14 +354,14 @@ export function RevenuePage() {
                       className="flex items-center justify-between rounded-xl border border-black/[0.04] dark:border-white/[0.05] bg-slate-50/50 dark:bg-zinc-800/40 p-2.5"
                     >
                       <div className="flex items-center gap-2.5">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06] text-[11px] font-bold text-slate-600 dark:text-zinc-400 font-mono">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-black/[0.04] dark:bg-white/[0.06] text-xs font-bold text-slate-600 dark:text-zinc-400 font-mono">
                           #{index + 1}
                         </span>
                         <div>
                           <p className="text-xs font-semibold text-slate-800 dark:text-zinc-200">
                             {r.name}
                           </p>
-                          <p className="text-[10px] text-slate-400">
+                          <p className="text-xs text-slate-400">
                             {r.nights} nights • {r.bookings} stay{r.bookings === 1 ? "" : "s"}
                           </p>
                         </div>
@@ -371,7 +371,7 @@ export function RevenuePage() {
                         <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100 font-mono">
                           {formatPrice(r.revenue)}
                         </p>
-                        <p className="text-[10px] text-slate-400 font-mono">
+                        <p className="text-xs text-slate-400 font-mono">
                           {percentOfTotal.toFixed(1)}% of total
                         </p>
                       </div>
@@ -390,11 +390,11 @@ export function RevenuePage() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-sm font-semibold">Recent Revenue Activity</CardTitle>
-              <CardDescription className="text-[11px]">
+              <CardDescription className="text-xs">
                 Latest confirmed and checked-in revenue transactions
               </CardDescription>
             </div>
-            <span className="text-[11px] text-slate-400 font-mono">
+            <span className="text-xs text-slate-400 font-mono">
               Showing {recentTransactions.length} of {filteredBookings.length}
             </span>
           </div>
@@ -402,7 +402,7 @@ export function RevenuePage() {
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex items-center justify-center py-12 text-xs text-slate-400 gap-2">
-              <Loader2 className="h-4 w-4 animate-spin text-[#0071e3]" />
+              <Loader2 className="h-4 w-4 animate-spin text-primary" />
               <span>Loading transactions...</span>
             </div>
           ) : recentTransactions.length === 0 ? (
@@ -431,7 +431,7 @@ export function RevenuePage() {
                       <TableRow key={tx.id}>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0071e3]/10 text-[#0071e3] font-semibold text-[10px] border border-[#0071e3]/20">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-xs border border-primary/20">
                               {tx.guest?.name ? tx.guest.name.charAt(0).toUpperCase() : <User className="h-3 w-3" />}
                             </div>
                             <span className="font-semibold text-xs text-slate-800 dark:text-zinc-200">
@@ -447,13 +447,13 @@ export function RevenuePage() {
                         </TableCell>
 
                         <TableCell>
-                          <span className="font-mono text-[11px] text-slate-600 dark:text-zinc-400">
+                          <span className="font-mono text-xs text-slate-600 dark:text-zinc-400">
                             {tx.check_in} → {tx.check_out}
                           </span>
                         </TableCell>
 
                         <TableCell>
-                          <Badge className={`text-[10px] border font-medium ${sourceMeta.badgeClass}`}>
+                          <Badge className={`text-xs border font-medium ${sourceMeta.badgeClass}`}>
                             <span
                               className="h-1.5 w-1.5 rounded-full mr-1"
                               style={{ backgroundColor: sourceMeta.hex }}
@@ -465,7 +465,7 @@ export function RevenuePage() {
                         <TableCell>
                           <Badge
                             variant={tx.status === "confirmed" ? "success" : "default"}
-                            className="capitalize text-[10px]"
+                            className="capitalize text-xs"
                           >
                             {tx.status.replace("_", " ")}
                           </Badge>
@@ -476,7 +476,7 @@ export function RevenuePage() {
                             {formatPrice(tx.total_price)}
                           </span>
                           {Number(tx.extra_charges || 0) > 0 && (
-                            <span className="block text-[9px] text-amber-600 font-mono">
+                            <span className="block text-xs text-amber-600 font-mono">
                               +{formatPrice(tx.extra_charges)} extras
                             </span>
                           )}

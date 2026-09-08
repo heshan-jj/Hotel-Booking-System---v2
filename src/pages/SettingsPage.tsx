@@ -9,18 +9,18 @@ export function SettingsPage() {
   const [activeTab, setActiveTab] = useState("channel-manager")
 
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-5 max-w-6xl">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500 text-white shadow-md shadow-amber-500/20">
-          <SettingsIcon className="h-5 w-5" />
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-ios-sm">
+          <SettingsIcon className="h-4.5 w-4.5" />
         </div>
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-zinc-100">
             System & Property Settings
           </h1>
-          <p className="text-xs text-slate-500">
-            Manage your OTA channel synchronization, room inventory, and hotel branding.
+          <p className="text-xs text-slate-400 font-normal">
+            Manage your OTA channel synchronization, room inventory, and hotel branding
           </p>
         </div>
       </div>

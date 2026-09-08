@@ -15,6 +15,14 @@ import {
   Sparkles,
   AlertCircle,
 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import "@/styles/calendar.css"
 
 interface CalendarBookingEvent {
@@ -135,7 +143,7 @@ export function CalendarPage() {
       {/* Top Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0071e3]/10 text-[#0071e3] border border-[#0071e3]/20 shadow-ios-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-ios-sm">
             <CalendarIcon className="h-4.5 w-4.5" />
           </div>
           <div>
@@ -149,24 +157,24 @@ export function CalendarPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            size="sm"
             onClick={() => refetch()}
-            title="Refresh bookings"
-            className="flex h-8 items-center gap-1.5 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm hover:bg-slate-50 active:scale-[0.98] transition-all"
+            className="h-8 gap-1.5 text-xs font-medium"
           >
             <RefreshCw className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
-          </button>
+          </Button>
 
-          <button
-            type="button"
+          <Button
+            size="sm"
             onClick={handleOpenCreateModal}
-            className="flex h-8 items-center gap-1.5 rounded-lg bg-[#0071e3] px-3.5 text-xs font-semibold text-white shadow-[0_1px_2px_rgba(0,113,227,0.2),inset_0_1px_0.5px_rgba(255,255,255,0.25)] hover:bg-[#0077ed] active:bg-[#0062c4] active:scale-[0.98] transition-all"
+            className="h-8 gap-1.5 text-xs font-semibold"
           >
             <Plus className="h-3.5 w-3.5" />
             <span>New Booking</span>
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -179,24 +187,24 @@ export function CalendarPage() {
             </div>
             <div>
               <p className="text-xs font-semibold text-amber-900 dark:text-amber-300">No hotel rooms configured yet</p>
-              <p className="text-[11px] text-amber-700 dark:text-amber-400">
+              <p className="text-xs text-amber-700 dark:text-amber-400">
                 To start booking reservations, initialize sample rooms or create them in Settings.
               </p>
             </div>
           </div>
-          <button
-            type="button"
+          <Button
+            size="sm"
             disabled={createDefaultRoomsMutation.isPending}
             onClick={() => createDefaultRoomsMutation.mutate()}
-            className="flex h-7 items-center gap-1.5 rounded-lg bg-amber-600 px-3 text-xs font-medium text-white shadow-ios-sm hover:bg-amber-500 active:scale-[0.98] disabled:opacity-50 transition-all"
+            className="h-7 gap-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-medium shadow-ios-sm"
           >
             {createDefaultRoomsMutation.isPending ? (
               <Loader2 className="h-3 w-3 animate-spin" />
             ) : (
               <Sparkles className="h-3 w-3" />
             )}
-            Initialize Sample Rooms
-          </button>
+            <span>Initialize Sample Rooms</span>
+          </Button>
         </div>
       )}
 
@@ -240,28 +248,29 @@ export function CalendarPage() {
                   style={{ backgroundColor: isSelected ? "#ffffff" : meta.hex }}
                 />
                 <span>{meta.label}</span>
-                <span className="text-[10px] opacity-75 font-mono">({count})</span>
+                <span className="text-xs opacity-75 font-mono">({count})</span>
               </button>
             )
           })}
         </div>
 
         {/* Room Filter */}
-        <div className="flex items-center gap-2">
-          <Filter className="h-3.5 w-3.5 text-slate-400" />
-          <span className="text-xs font-medium text-slate-400">Room:</span>
-          <select
-            value={selectedRoomId}
-            onChange={(e) => setSelectedRoomId(e.target.value)}
-            className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
-          >
-            <option value="all">All Rooms ({rooms.length})</option>
-            {rooms.map((room) => (
-              <option key={room.id} value={room.id}>
-                {room.name}
-              </option>
-            ))}
-          </select>
+        <div className="flex items-center gap-2 min-w-[190px]">
+          <Filter className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+          <span className="text-xs font-medium text-slate-400 shrink-0">Room:</span>
+          <Select value={selectedRoomId} onValueChange={setSelectedRoomId}>
+            <SelectTrigger className="h-8 w-44">
+              <SelectValue placeholder="All Rooms" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Rooms ({rooms.length})</SelectItem>
+              {rooms.map((room) => (
+                <SelectItem key={room.id} value={room.id}>
+                  {room.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -271,7 +280,7 @@ export function CalendarPage() {
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
           <div>
             <p className="font-semibold">Failed to load reservations</p>
-            <p className="text-[11px] text-rose-600">
+            <p className="text-xs text-rose-600">
               {(error as Error)?.message || "Please check your network and Supabase connection."}
             </p>
           </div>
@@ -283,7 +292,7 @@ export function CalendarPage() {
         {isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 backdrop-blur-xs">
             <div className="flex flex-col items-center gap-2">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
               <p className="text-xs font-medium text-slate-500">Loading reservations...</p>
             </div>
           </div>

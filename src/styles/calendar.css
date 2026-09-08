@@ -88,7 +88,7 @@
 }
 
 .rbc-today {
-  background-color: rgba(0, 113, 227, 0.04) !important;
+  background-color: hsl(var(--primary) / 0.06) !important;
 }
 
 .rbc-date-cell {
@@ -100,7 +100,7 @@
 
 .rbc-now .rbc-date-cell {
   font-weight: 700;
-  color: #0071e3;
+  color: hsl(var(--primary));
 }
 
 .rbc-event {
@@ -123,7 +123,7 @@
 
 .rbc-show-more {
   background-color: transparent;
-  color: #0071e3;
+  color: hsl(var(--primary));
   font-size: 0.6875rem;
   font-weight: 600;
   padding: 2px 4px;

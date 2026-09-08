@@ -26,8 +26,8 @@ export function MobileTabBar() {
             className={({ isActive }) =>
               `flex flex-col items-center justify-center flex-1 py-1 transition-all duration-100 active:scale-90 ${
                 isActive
-                  ? "text-[#0071e3] dark:text-[#3898ec]"
-                  : "text-slate-400 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-zinc-300"
+                  ? "text-primary font-semibold"
+                  : "text-slate-400 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-zinc-300 font-medium"
               }`
             }
           >
@@ -36,10 +36,10 @@ export function MobileTabBar() {
                 <div className="relative">
                   <tab.icon className={`h-5 w-5 transition-transform ${isActive ? "stroke-[2.2]" : "stroke-[1.7]"}`} />
                   {isActive && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-[#0071e3] dark:bg-[#3898ec]" />
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-1 w-1 rounded-full bg-primary" />
                   )}
                 </div>
-                <span className={`text-[10px] tracking-tight mt-1 ${isActive ? "font-semibold" : "font-medium"}`}>
+                <span className={`text-xs tracking-tight mt-1 ${isActive ? "font-semibold" : "font-medium"}`}>
                   {tab.name}
                 </span>
               </>

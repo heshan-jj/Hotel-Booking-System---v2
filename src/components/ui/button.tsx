@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[#0071e3] text-white shadow-[0_1px_2px_rgba(0,113,227,0.2),inset_0_1px_0.5px_rgba(255,255,255,0.25)] hover:bg-[#0077ed] active:bg-[#0062c4] border border-[#0062c4]/40 font-semibold",
+          "bg-primary text-primary-foreground shadow-ios-sm hover:bg-primary/90 active:bg-primary/95 font-semibold",
         destructive:
           "bg-rose-500 text-white shadow-[0_1px_2px_rgba(244,63,94,0.2),inset_0_1px_0.5px_rgba(255,255,255,0.2)] hover:bg-rose-600 active:bg-rose-700 border border-rose-600/30 font-semibold",
         outline:
@@ -18,7 +18,7 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-black/[0.04] dark:hover:bg-white/[0.06] text-foreground",
         link:
-          "text-[#0071e3] underline-offset-4 hover:underline",
+          "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",

@@ -363,7 +363,7 @@ export function BookingModal({
             <h3 className="text-base font-semibold text-slate-900 dark:text-zinc-100 tracking-tight">
               {isEditing ? "Edit Reservation" : "Create New Booking"}
             </h3>
-            <p className="text-[11px] text-slate-400 dark:text-zinc-500 font-normal">
+            <p className="text-xs text-slate-400 dark:text-zinc-500 font-normal">
               {isEditing
                 ? "Update reservation details, pricing, or status"
                 : "Reserve room(s) with live conflict prevention and price customization"}
@@ -398,7 +398,7 @@ export function BookingModal({
           {/* 2. Check-in and Check-out dates */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+              <label className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                 <Calendar className="h-3 w-3 text-slate-400" />
                 Check-in Date <span className="text-rose-500">*</span>
               </label>
@@ -410,12 +410,12 @@ export function BookingModal({
                   setCheckIn(e.target.value)
                   setErrorMessage(null)
                 }}
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
               />
             </div>
 
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+              <label className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                 <Calendar className="h-3 w-3 text-slate-400" />
                 Check-out Date <span className="text-rose-500">*</span>
               </label>
@@ -428,7 +428,7 @@ export function BookingModal({
                   setCheckOut(e.target.value)
                   setErrorMessage(null)
                 }}
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
               />
             </div>
           </div>
@@ -436,19 +436,19 @@ export function BookingModal({
           {/* 3. Room Selection with Live Conflict Prevention */}
           <div>
             <div className="mb-1.5 flex items-center justify-between">
-              <label className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+              <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                 <BedDouble className="h-3 w-3 text-slate-400" />
                 {isEditing ? "Assigned Room" : "Select Room(s) for this Stay"}{" "}
                 <span className="text-rose-500">*</span>
               </label>
               <div className="flex items-center gap-1.5">
                 {!isEditing && selectedRoomIds.length > 1 && (
-                  <span className="text-[10px] font-medium text-[#0071e3] bg-[#0071e3]/10 border border-[#0071e3]/20 px-2 py-0.5 rounded-md">
+                  <span className="text-xs font-medium text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-md">
                     {selectedRoomIds.length} rooms selected
                   </span>
                 )}
                 {unavailableRoomIds.length > 0 && (
-                  <span className="text-[10px] font-medium text-amber-700 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">
+                  <span className="text-xs font-medium text-amber-700 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">
                     {unavailableRoomIds.length} booked for dates
                   </span>
                 )}
@@ -457,7 +457,7 @@ export function BookingModal({
 
             {isLoadingRooms ? (
               <div className="flex items-center gap-2 rounded-xl border border-black/[0.06] bg-slate-50/80 p-2.5 text-xs text-slate-400">
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-[#0071e3]" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
                 <span>Loading property rooms...</span>
               </div>
             ) : rooms.length === 0 ? (
@@ -485,7 +485,7 @@ export function BookingModal({
                   setSingleRoomId(e.target.value)
                   setErrorMessage(null)
                 }}
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
               >
                 {rooms.map((room) => {
                   const isUnavailable = unavailableRoomIds.includes(room.id)
@@ -520,17 +520,17 @@ export function BookingModal({
                         isUnavailable
                           ? "bg-slate-100/70 dark:bg-zinc-800/50 text-slate-400 border-black/[0.04] dark:border-white/[0.04] cursor-not-allowed opacity-60"
                           : isSelected
-                          ? "cursor-pointer border-2 border-[#0071e3] bg-[#0071e3]/[0.06] text-slate-900 dark:text-zinc-100 shadow-ios-sm"
+                          ? "cursor-pointer border-2 border-primary bg-primary/[0.06] text-slate-900 dark:text-zinc-100 shadow-ios-sm"
                           : "cursor-pointer bg-white dark:bg-zinc-900 text-slate-700 dark:text-zinc-300 border-black/[0.08] dark:border-white/[0.08] hover:border-black/[0.15] hover:bg-slate-50/80 active:scale-[0.98]"
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         <div
-                          className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] transition-colors ${
+                          className={`w-4 h-4 rounded-full flex items-center justify-center text-xs transition-colors ${
                             isUnavailable
                               ? "border border-rose-300 bg-rose-50 text-rose-500"
                               : isSelected
-                              ? "bg-[#0071e3] text-white"
+                              ? "bg-primary text-primary-foreground"
                               : "border border-black/[0.2] dark:border-white/[0.2] bg-transparent"
                           }`}
                         >
@@ -549,15 +549,15 @@ export function BookingModal({
                             {room.name}
                           </span>
                           {isUnavailable && (
-                            <span className="block text-[9px] text-rose-500 font-normal">
+                            <span className="block text-xs text-rose-500 font-normal">
                               Booked for dates
                             </span>
                           )}
                         </div>
                       </div>
-                      <span className={`font-mono text-[11px] px-1.5 py-0.5 rounded font-semibold ${
+                      <span className={`font-mono text-xs px-1.5 py-0.5 rounded font-semibold ${
                         isSelected
-                          ? "bg-[#0071e3]/10 text-[#0071e3]"
+                          ? "bg-primary/10 text-primary"
                           : "bg-black/[0.04] dark:bg-white/[0.06] text-slate-600 dark:text-zinc-400"
                       }`}>
                         {currencySymbol}{room.base_rate}/nt
@@ -572,11 +572,11 @@ export function BookingModal({
           {/* 4. Pricing and Extras */}
           <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-slate-50/70 dark:bg-zinc-800/40 p-3 space-y-2.5 shadow-ios-sm">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:text-zinc-300 flex items-center gap-1.5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-zinc-300 flex items-center gap-1.5">
                 <DollarSign className="h-3 w-3 text-emerald-600" />
                 Price Calculation & Extras
               </span>
-              <span className="text-[11px] text-slate-400 font-mono">
+              <span className="text-xs text-slate-400 font-mono">
                 {nights} {nights === 1 ? "night" : "nights"} stay
               </span>
             </div>
@@ -584,7 +584,7 @@ export function BookingModal({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {/* Extra charges */}
               <div>
-                <label className="mb-1 flex items-center gap-1 text-[11px] font-medium text-slate-600 dark:text-zinc-400">
+                <label className="mb-1 flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-zinc-400">
                   <Utensils className="h-3 w-3 text-amber-500" />
                   Food & Beverage / Extras ({currencySymbol})
                 </label>
@@ -595,17 +595,17 @@ export function BookingModal({
                   value={extraCharges === 0 ? "" : extraCharges}
                   placeholder="0.00"
                   onChange={(e) => setExtraCharges(parseFloat(e.target.value) || 0)}
-                  className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1 text-xs text-foreground tracking-tight shadow-ios-sm focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15"
+                  className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1 text-xs text-foreground tracking-tight shadow-ios-sm focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
                 />
               </div>
 
               {/* Final Total Price */}
               <div>
                 <div className="mb-1 flex items-center justify-between">
-                  <label className="flex items-center gap-1 text-[11px] font-semibold text-slate-700 dark:text-zinc-300">
+                  <label className="flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-zinc-300">
                     Final Price ({currencySymbol})
                     {isManualPriceOverridden && (
-                      <span className="text-[9px] text-amber-600 font-medium bg-amber-500/10 border border-amber-500/20 px-1 py-0.2 rounded">
+                      <span className="text-xs text-amber-600 font-medium bg-amber-500/10 border border-amber-500/20 px-1 py-0.2 rounded">
                         Custom
                       </span>
                     )}
@@ -614,7 +614,7 @@ export function BookingModal({
                     <button
                       type="button"
                       onClick={handleResetPrice}
-                      className="text-[10px] text-[#0071e3] hover:underline flex items-center gap-0.5"
+                      className="text-xs text-primary hover:underline flex items-center gap-0.5"
                     >
                       <RotateCcw className="h-2.5 w-2.5" /> Reset
                     </button>
@@ -633,14 +633,14 @@ export function BookingModal({
                   className={`w-full rounded-lg border px-3 py-1 text-xs font-semibold shadow-ios-sm focus-visible:outline-none ${
                     isManualPriceOverridden
                       ? "border-amber-400/80 bg-amber-50/40 text-amber-900 focus-visible:border-amber-500 focus-visible:ring-2 focus-visible:ring-amber-500/20"
-                      : "border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 text-foreground focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15"
+                      : "border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 text-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
                   }`}
                 />
               </div>
             </div>
 
             {/* Pricing breakdown summary */}
-            <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center justify-between border-t border-black/[0.05] dark:border-white/[0.06] pt-2">
+            <div className="text-xs text-slate-500 dark:text-zinc-400 flex items-center justify-between border-t border-black/[0.05] dark:border-white/[0.06] pt-2">
               <span>
                 Base room rate: <strong className="text-slate-800 dark:text-zinc-200">{formatPrice(calculatedBaseRoomPrice)}</strong>
                 {extraCharges > 0 && (
@@ -651,7 +651,7 @@ export function BookingModal({
                 )}
               </span>
               <span className="font-semibold text-slate-900 dark:text-zinc-100">
-                Final Total: <span className="text-[#0071e3]">{formatPrice(finalPrice)}</span>
+                Final Total: <span className="text-primary">{formatPrice(finalPrice)}</span>
               </span>
             </div>
           </div>
@@ -659,14 +659,14 @@ export function BookingModal({
           {/* 5. Source & Status */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+              <label className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                 <Tag className="h-3 w-3 text-slate-400" />
                 Booking Source <span className="text-rose-500">*</span>
               </label>
               <select
                 value={source}
                 onChange={(e) => setSource(e.target.value as BookingSource)}
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
               >
                 {Object.entries(BOOKING_SOURCES).map(([key, meta]) => (
                   <option key={key} value={key}>
@@ -677,14 +677,14 @@ export function BookingModal({
             </div>
 
             <div>
-              <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+              <label className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
                 <Clock className="h-3 w-3 text-slate-400" />
                 Status
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
               >
                 {BOOKING_STATUSES.map((item) => (
                   <option key={item.value} value={item.value}>
@@ -697,7 +697,7 @@ export function BookingModal({
 
           {/* 6. Notes */}
           <div>
-            <label className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+            <label className="mb-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
               <FileText className="h-3 w-3 text-slate-400" />
               Reservation Notes & Special Requests
             </label>
@@ -706,13 +706,13 @@ export function BookingModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Food & beverage preferences, late checkout, payment notes..."
-              className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground placeholder-slate-400 tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
+              className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-3 py-1.5 text-xs text-foreground placeholder-slate-400 tracking-tight shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 transition-all"
             />
           </div>
 
           {/* iCal UID indicator if syncing */}
           {initialBooking?.ical_uid && (
-            <div className="rounded-lg border border-black/[0.06] bg-slate-50 px-3 py-1.5 text-[11px] text-slate-500">
+            <div className="rounded-lg border border-black/[0.06] bg-slate-50 px-3 py-1.5 text-xs text-slate-500">
               <span className="font-semibold text-slate-700">iCal UID: </span>
               <span className="font-mono">{initialBooking.ical_uid}</span>
             </div>
@@ -763,7 +763,7 @@ export function BookingModal({
               <button
                 type="submit"
                 disabled={isSaving || rooms.length === 0}
-                className="flex h-8.5 items-center gap-1.5 rounded-lg bg-[#0071e3] px-5 text-xs font-semibold text-white shadow-[0_1px_2px_rgba(0,113,227,0.2),inset_0_1px_0.5px_rgba(255,255,255,0.25)] hover:bg-[#0077ed] active:bg-[#0062c4] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 transition-all"
+                className="flex h-8.5 items-center gap-1.5 rounded-lg bg-primary px-5 text-xs font-semibold text-primary-foreground shadow-ios-sm hover:bg-primary/90 active:bg-primary/95 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 transition-all"
               >
                 {isSaving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                 <span>

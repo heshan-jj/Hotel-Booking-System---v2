@@ -14,6 +14,13 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Table,
   TableHeader,
   TableBody,
@@ -148,7 +155,7 @@ export function BookingsPage() {
       {/* Top Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0071e3]/10 text-[#0071e3] border border-[#0071e3]/20 shadow-ios-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-ios-sm">
             <CalendarCheck className="h-4.5 w-4.5" />
           </div>
           <div>
@@ -186,7 +193,7 @@ export function BookingsPage() {
       <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-4">
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
               Total Bookings
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
@@ -196,7 +203,7 @@ export function BookingsPage() {
 
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
               Confirmed
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -206,17 +213,17 @@ export function BookingsPage() {
 
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-[#0071e3] uppercase tracking-wider">
+            <span className="text-xs font-semibold text-primary uppercase tracking-wider">
               Checked In
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-[#0071e3]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
           </div>
-          <p className="mt-1 text-2xl font-bold tracking-tight text-[#0071e3]">{stats.checkedIn}</p>
+          <p className="mt-1 text-2xl font-bold tracking-tight text-primary">{stats.checkedIn}</p>
         </div>
 
         <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-rose-600 uppercase tracking-wider">
               Cancelled
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
@@ -245,54 +252,57 @@ export function BookingsPage() {
           {/* Dropdown Filters */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Status Filter */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-slate-400">Status:</span>
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
-              >
-                <option value="all">All Statuses</option>
-                {BOOKING_STATUSES.map((st) => (
-                  <option key={st.value} value={st.value}>
-                    {st.label}
-                  </option>
-                ))}
-              </select>
+            <div className="flex items-center gap-1.5 min-w-[130px]">
+              <span className="text-xs font-medium text-slate-400 shrink-0">Status:</span>
+              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                <SelectTrigger className="h-8 w-32">
+                  <SelectValue placeholder="All Statuses" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Statuses</SelectItem>
+                  {BOOKING_STATUSES.map((st) => (
+                    <SelectItem key={st.value} value={st.value}>
+                      {st.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Source Filter */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-slate-400">Source:</span>
-              <select
-                value={selectedSource}
-                onChange={(e) => setSelectedSource(e.target.value)}
-                className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
-              >
-                <option value="all">All Sources</option>
-                {Object.entries(BOOKING_SOURCES).map(([key, meta]) => (
-                  <option key={key} value={key}>
-                    {meta.label}
-                  </option>
-                ))}
-              </select>
+            <div className="flex items-center gap-1.5 min-w-[130px]">
+              <span className="text-xs font-medium text-slate-400 shrink-0">Source:</span>
+              <Select value={selectedSource} onValueChange={setSelectedSource}>
+                <SelectTrigger className="h-8 w-32">
+                  <SelectValue placeholder="All Sources" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Sources</SelectItem>
+                  {Object.entries(BOOKING_SOURCES).map(([key, meta]) => (
+                    <SelectItem key={key} value={key}>
+                      {meta.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Room Filter */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-medium text-slate-400">Room:</span>
-              <select
-                value={selectedRoomId}
-                onChange={(e) => setSelectedRoomId(e.target.value)}
-                className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
-              >
-                <option value="all">All Rooms</option>
-                {rooms.map((r) => (
-                  <option key={r.id} value={r.id}>
-                    {r.name}
-                  </option>
-                ))}
-              </select>
+            <div className="flex items-center gap-1.5 min-w-[130px]">
+              <span className="text-xs font-medium text-slate-400 shrink-0">Room:</span>
+              <Select value={selectedRoomId} onValueChange={setSelectedRoomId}>
+                <SelectTrigger className="h-8 w-36">
+                  <SelectValue placeholder="All Rooms" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Rooms</SelectItem>
+                  {rooms.map((r) => (
+                    <SelectItem key={r.id} value={r.id}>
+                      {r.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -303,7 +313,7 @@ export function BookingsPage() {
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex items-center justify-center py-16 text-xs text-slate-400 gap-2">
-              <Loader2 className="h-5 w-5 animate-spin text-[#0071e3]" />
+              <Loader2 className="h-5 w-5 animate-spin text-primary" />
               <span>Loading reservations...</span>
             </div>
           ) : isError ? (
@@ -346,14 +356,14 @@ export function BookingsPage() {
                         {/* Guest */}
                         <TableCell>
                           <div className="flex items-center gap-2.5">
-                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0071e3]/10 text-[#0071e3] font-semibold text-xs border border-[#0071e3]/20">
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary font-semibold text-xs border border-primary/20">
                               {booking.guest?.name ? booking.guest.name.charAt(0).toUpperCase() : <User className="h-3.5 w-3.5" />}
                             </div>
                             <div>
                               <p className="font-semibold text-slate-900 dark:text-zinc-100 text-xs tracking-tight">
                                 {booking.guest?.name || "Unknown Guest"}
                               </p>
-                              <p className="text-[11px] text-slate-400 font-normal">
+                              <p className="text-xs text-slate-400 font-normal">
                                 {[booking.guest?.phone, booking.guest?.email]
                                   .filter(Boolean)
                                   .join(" • ") || "No contact info"}
@@ -372,7 +382,7 @@ export function BookingsPage() {
 
                         {/* Stay Dates */}
                         <TableCell>
-                          <div className="text-xs font-medium text-slate-800 dark:text-zinc-200 font-mono text-[11px]">
+                          <div className="text-xs font-medium text-slate-800 dark:text-zinc-200 font-mono">
                             <span>{booking.check_in}</span>
                             <span className="mx-1 text-slate-300">→</span>
                             <span>{booking.check_out}</span>
@@ -381,7 +391,7 @@ export function BookingsPage() {
 
                         {/* Nights */}
                         <TableCell>
-                          <Badge variant="secondary" className="text-[10px] font-mono">
+                          <Badge variant="secondary" className="text-xs font-mono">
                             {nights} {nights === 1 ? "night" : "nights"}
                           </Badge>
                         </TableCell>
@@ -389,7 +399,7 @@ export function BookingsPage() {
                         {/* Source */}
                         <TableCell>
                           <Badge
-                            className={`text-[11px] border font-medium ${sourceMeta.badgeClass}`}
+                            className={`text-xs border font-medium ${sourceMeta.badgeClass}`}
                           >
                             <span
                               className="h-1.5 w-1.5 rounded-full mr-1.5"
@@ -411,7 +421,7 @@ export function BookingsPage() {
                                 ? "destructive"
                                 : "secondary"
                             }
-                            className="capitalize"
+                            className="capitalize text-xs"
                           >
                             {booking.status.replace("_", " ")}
                           </Badge>
@@ -423,7 +433,7 @@ export function BookingsPage() {
                             {formatPrice(booking.total_price)}
                           </div>
                           {Number(booking.extra_charges || 0) > 0 && (
-                            <div className="text-[10px] text-amber-600 font-medium">
+                            <div className="text-xs text-amber-600 font-medium">
                               +{formatPrice(booking.extra_charges)} extras
                             </div>
                           )}
@@ -439,7 +449,7 @@ export function BookingsPage() {
                                 size="sm"
                                 title="Check In Guest"
                                 onClick={() => handleStatusChange(booking.id, "checked_in")}
-                                className="h-7 text-[11px] gap-1 text-[#0071e3] hover:bg-[#0071e3]/10"
+                                className="h-7 text-xs gap-1 text-primary hover:bg-primary/10"
                               >
                                 <CheckCircle2 className="h-3 w-3" />
                                 <span className="hidden sm:inline">Check In</span>
@@ -452,7 +462,7 @@ export function BookingsPage() {
                                 size="sm"
                                 title="Check Out Guest"
                                 onClick={() => handleStatusChange(booking.id, "checked_out")}
-                                className="h-7 text-[11px] gap-1 text-slate-600 hover:text-slate-900 hover:bg-black/[0.04]"
+                                className="h-7 text-xs gap-1 text-slate-600 hover:text-slate-900 hover:bg-black/[0.04]"
                               >
                                 <LogOutIcon className="h-3 w-3" />
                                 <span className="hidden sm:inline">Check Out</span>

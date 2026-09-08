@@ -113,24 +113,26 @@ export function GuestsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Top Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="rounded-xl bg-emerald-500/10 p-2.5 text-emerald-600">
-            <Users className="h-6 w-6" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary border border-primary/20 shadow-ios-sm">
+            <Users className="h-4.5 w-4.5" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Guests</h1>
-            <p className="text-sm text-slate-500">
+            <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-zinc-100">
+              Guest Directory
+            </h1>
+            <p className="text-xs text-slate-400 font-normal">
               Manage guest profiles, contact directory, and booking records
             </p>
           </div>
         </div>
 
-        <Button onClick={handleOpenAdd} className="gap-2 shadow-sm rounded-xl">
-          <Plus className="h-4 w-4" />
-          Add Guest
+        <Button size="sm" onClick={handleOpenAdd} className="h-8 gap-1.5 text-xs font-semibold">
+          <Plus className="h-3.5 w-3.5" />
+          <span>New Guest</span>
         </Button>
       </div>
 
