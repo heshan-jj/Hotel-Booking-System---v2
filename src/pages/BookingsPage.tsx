@@ -144,18 +144,18 @@ export function BookingsPage() {
   }
 
   return (
-    <div className="space-y-6 max-w-7xl">
+    <div className="space-y-5 max-w-7xl">
       {/* Top Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20">
-            <CalendarCheck className="h-5 w-5" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0071e3]/10 text-[#0071e3] border border-[#0071e3]/20 shadow-ios-sm">
+            <CalendarCheck className="h-4.5 w-4.5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-zinc-100">
               Reservations & Bookings
             </h1>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400 font-normal">
               Manage all guest reservations, channel bookings, and guest arrivals
             </p>
           </div>
@@ -166,142 +166,155 @@ export function BookingsPage() {
             variant="outline"
             size="sm"
             onClick={() => refetch()}
-            className="gap-1.5 bg-white text-xs"
+            className="h-8 gap-1.5 text-xs font-medium"
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin" : ""}`} />
+            <RefreshCw className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`} />
             <span>Refresh</span>
           </Button>
           <Button
             size="sm"
             onClick={handleCreate}
-            className="gap-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs shadow-xs"
+            className="h-8 gap-1.5 text-xs font-semibold"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5" />
             <span>New Booking</span>
           </Button>
         </div>
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            Total Bookings
-          </p>
-          <p className="mt-1 text-2xl font-bold text-slate-900">{stats.total}</p>
+      <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-4">
+        <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+              Total Bookings
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+          </div>
+          <p className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-zinc-100">{stats.total}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">
-            Confirmed
-          </p>
-          <p className="mt-1 text-2xl font-bold text-emerald-700">{stats.confirmed}</p>
+
+        <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+              Confirmed
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          </div>
+          <p className="mt-1 text-2xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400">{stats.confirmed}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider">
-            Checked In
-          </p>
-          <p className="mt-1 text-2xl font-bold text-blue-700">{stats.checkedIn}</p>
+
+        <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-[#0071e3] uppercase tracking-wider">
+              Checked In
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#0071e3]" />
+          </div>
+          <p className="mt-1 text-2xl font-bold tracking-tight text-[#0071e3]">{stats.checkedIn}</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
-          <p className="text-xs font-semibold text-red-600 uppercase tracking-wider">
-            Cancelled
-          </p>
-          <p className="mt-1 text-2xl font-bold text-red-600">{stats.cancelled}</p>
+
+        <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3.5 shadow-ios-card transition-all duration-150">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-rose-600 uppercase tracking-wider">
+              Cancelled
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
+          </div>
+          <p className="mt-1 text-2xl font-bold tracking-tight text-rose-600">{stats.cancelled}</p>
         </div>
       </div>
 
       {/* Search & Filter Toolbar */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            {/* Search Input */}
-            <div className="relative flex-1 max-w-md">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-                <Search className="h-4 w-4" />
-              </div>
-              <Input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search guest, room, notes, or UID..."
-                className="pl-9 text-xs"
-              />
+      <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3 shadow-ios-sm">
+        <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
+          {/* Search Input */}
+          <div className="relative flex-1 max-w-md">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
+              <Search className="h-3.5 w-3.5" />
+            </div>
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search guest, room, notes, or UID..."
+              className="pl-8 h-8 text-xs bg-slate-50/80 dark:bg-zinc-800/60"
+            />
+          </div>
+
+          {/* Dropdown Filters */}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Status Filter */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-medium text-slate-400">Status:</span>
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
+              >
+                <option value="all">All Statuses</option>
+                {BOOKING_STATUSES.map((st) => (
+                  <option key={st.value} value={st.value}>
+                    {st.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            {/* Dropdown Filters */}
-            <div className="flex flex-wrap items-center gap-2">
-              {/* Status Filter */}
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-semibold text-slate-500">Status:</span>
-                <select
-                  value={selectedStatus}
-                  onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 focus:border-blue-500 focus:outline-none"
-                >
-                  <option value="all">All Statuses</option>
-                  {BOOKING_STATUSES.map((st) => (
-                    <option key={st.value} value={st.value}>
-                      {st.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* Source Filter */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-medium text-slate-400">Source:</span>
+              <select
+                value={selectedSource}
+                onChange={(e) => setSelectedSource(e.target.value)}
+                className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
+              >
+                <option value="all">All Sources</option>
+                {Object.entries(BOOKING_SOURCES).map(([key, meta]) => (
+                  <option key={key} value={key}>
+                    {meta.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              {/* Source Filter */}
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-semibold text-slate-500">Source:</span>
-                <select
-                  value={selectedSource}
-                  onChange={(e) => setSelectedSource(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 focus:border-blue-500 focus:outline-none"
-                >
-                  <option value="all">All Sources</option>
-                  {Object.entries(BOOKING_SOURCES).map(([key, meta]) => (
-                    <option key={key} value={key}>
-                      {meta.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Room Filter */}
-              <div className="flex items-center gap-1">
-                <span className="text-xs font-semibold text-slate-500">Room:</span>
-                <select
-                  value={selectedRoomId}
-                  onChange={(e) => setSelectedRoomId(e.target.value)}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 focus:border-blue-500 focus:outline-none"
-                >
-                  <option value="all">All Rooms</option>
-                  {rooms.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            {/* Room Filter */}
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-medium text-slate-400">Room:</span>
+              <select
+                value={selectedRoomId}
+                onChange={(e) => setSelectedRoomId(e.target.value)}
+                className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
+              >
+                <option value="all">All Rooms</option>
+                {rooms.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Bookings Table */}
-      <Card>
+      <Card className="overflow-hidden">
         <CardContent className="p-0">
           {isLoading ? (
-            <div className="flex items-center justify-center py-16 text-xs text-slate-500 gap-2">
-              <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+            <div className="flex items-center justify-center py-16 text-xs text-slate-400 gap-2">
+              <Loader2 className="h-5 w-5 animate-spin text-[#0071e3]" />
               <span>Loading reservations...</span>
             </div>
           ) : isError ? (
-            <div className="p-8 text-center text-xs text-red-600">
+            <div className="p-8 text-center text-xs text-rose-600">
               Failed to load reservations: {(error as Error).message}
             </div>
           ) : filteredBookings.length === 0 ? (
-            <div className="p-12 text-center text-xs text-slate-500">
-              <CalendarCheck className="mx-auto mb-2 h-8 w-8 text-slate-400" />
-              <p className="font-semibold text-slate-800 text-sm">No bookings found</p>
-              <p className="mt-1">
+            <div className="p-12 text-center text-xs text-slate-400">
+              <CalendarCheck className="mx-auto mb-2.5 h-8 w-8 text-slate-300 dark:text-zinc-600" />
+              <p className="font-semibold text-slate-800 dark:text-zinc-200 text-sm">No bookings found</p>
+              <p className="mt-1 text-slate-400">
                 {searchQuery || selectedStatus !== "all" || selectedSource !== "all"
                   ? "Try clearing your filters or search keywords."
                   : "Click '+ New Booking' to create your first reservation."}
@@ -311,15 +324,15 @@ export function BookingsPage() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-slate-50">
-                    <TableHead className="text-xs font-semibold">Guest</TableHead>
-                    <TableHead className="text-xs font-semibold">Room</TableHead>
-                    <TableHead className="text-xs font-semibold">Stay Dates</TableHead>
-                    <TableHead className="text-xs font-semibold">Nights</TableHead>
-                    <TableHead className="text-xs font-semibold">Source</TableHead>
-                    <TableHead className="text-xs font-semibold">Status</TableHead>
-                    <TableHead className="text-xs font-semibold">Price</TableHead>
-                    <TableHead className="text-right text-xs font-semibold">Actions</TableHead>
+                  <TableRow>
+                    <TableHead>Guest</TableHead>
+                    <TableHead>Room</TableHead>
+                    <TableHead>Stay Dates</TableHead>
+                    <TableHead>Nights</TableHead>
+                    <TableHead>Source</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -329,18 +342,18 @@ export function BookingsPage() {
                     const nights = calculateNights(booking.check_in, booking.check_out)
 
                     return (
-                      <TableRow key={booking.id} className="hover:bg-slate-50/80">
+                      <TableRow key={booking.id}>
                         {/* Guest */}
                         <TableCell>
                           <div className="flex items-center gap-2.5">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-600">
-                              <User className="h-4 w-4" />
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0071e3]/10 text-[#0071e3] font-semibold text-xs border border-[#0071e3]/20">
+                              {booking.guest?.name ? booking.guest.name.charAt(0).toUpperCase() : <User className="h-3.5 w-3.5" />}
                             </div>
                             <div>
-                              <p className="font-semibold text-slate-900 text-sm">
+                              <p className="font-semibold text-slate-900 dark:text-zinc-100 text-xs tracking-tight">
                                 {booking.guest?.name || "Unknown Guest"}
                               </p>
-                              <p className="text-xs text-slate-500">
+                              <p className="text-[11px] text-slate-400 font-normal">
                                 {[booking.guest?.phone, booking.guest?.email]
                                   .filter(Boolean)
                                   .join(" • ") || "No contact info"}
@@ -351,7 +364,7 @@ export function BookingsPage() {
 
                         {/* Room */}
                         <TableCell>
-                          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-800">
+                          <div className="flex items-center gap-1.5 text-xs font-medium text-slate-800 dark:text-zinc-200">
                             <BedDouble className="h-3.5 w-3.5 text-slate-400" />
                             <span>{booking.room?.name || "Unassigned"}</span>
                           </div>
@@ -359,16 +372,16 @@ export function BookingsPage() {
 
                         {/* Stay Dates */}
                         <TableCell>
-                          <div className="text-xs font-medium text-slate-900">
+                          <div className="text-xs font-medium text-slate-800 dark:text-zinc-200 font-mono text-[11px]">
                             <span>{booking.check_in}</span>
-                            <span className="mx-1 text-slate-400">→</span>
+                            <span className="mx-1 text-slate-300">→</span>
                             <span>{booking.check_out}</span>
                           </div>
                         </TableCell>
 
                         {/* Nights */}
                         <TableCell>
-                          <Badge variant="outline" className="text-[11px] font-mono bg-slate-50">
+                          <Badge variant="secondary" className="text-[10px] font-mono">
                             {nights} {nights === 1 ? "night" : "nights"}
                           </Badge>
                         </TableCell>
@@ -389,16 +402,16 @@ export function BookingsPage() {
                         {/* Status */}
                         <TableCell>
                           <Badge
-                            variant="secondary"
-                            className={`text-[11px] capitalize ${
+                            variant={
                               booking.status === "confirmed"
-                                ? "bg-emerald-100 text-emerald-800"
+                                ? "success"
                                 : booking.status === "checked_in"
-                                ? "bg-blue-100 text-blue-800"
+                                ? "default"
                                 : booking.status === "cancelled"
-                                ? "bg-red-100 text-red-800"
-                                : "bg-slate-100 text-slate-800"
-                            }`}
+                                ? "destructive"
+                                : "secondary"
+                            }
+                            className="capitalize"
                           >
                             {booking.status.replace("_", " ")}
                           </Badge>
@@ -406,7 +419,7 @@ export function BookingsPage() {
 
                         {/* Total Price & Extras */}
                         <TableCell>
-                          <div className="text-xs font-semibold text-slate-900">
+                          <div className="text-xs font-semibold text-slate-900 dark:text-zinc-100">
                             {formatPrice(booking.total_price)}
                           </div>
                           {Number(booking.extra_charges || 0) > 0 && (
@@ -426,9 +439,9 @@ export function BookingsPage() {
                                 size="sm"
                                 title="Check In Guest"
                                 onClick={() => handleStatusChange(booking.id, "checked_in")}
-                                className="h-7 text-xs gap-1 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                                className="h-7 text-[11px] gap-1 text-[#0071e3] hover:bg-[#0071e3]/10"
                               >
-                                <CheckCircle2 className="h-3.5 w-3.5" />
+                                <CheckCircle2 className="h-3 w-3" />
                                 <span className="hidden sm:inline">Check In</span>
                               </Button>
                             )}
@@ -439,9 +452,9 @@ export function BookingsPage() {
                                 size="sm"
                                 title="Check Out Guest"
                                 onClick={() => handleStatusChange(booking.id, "checked_out")}
-                                className="h-7 text-xs gap-1 text-slate-600 hover:text-slate-800 hover:bg-slate-100"
+                                className="h-7 text-[11px] gap-1 text-slate-600 hover:text-slate-900 hover:bg-black/[0.04]"
                               >
-                                <LogOutIcon className="h-3.5 w-3.5" />
+                                <LogOutIcon className="h-3 w-3" />
                                 <span className="hidden sm:inline">Check Out</span>
                               </Button>
                             )}
@@ -452,7 +465,7 @@ export function BookingsPage() {
                               size="sm"
                               title="Edit Details"
                               onClick={() => handleEdit(booking)}
-                              className="h-7 w-7 p-0 text-slate-500 hover:text-slate-900"
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-slate-800"
                             >
                               <Edit className="h-3.5 w-3.5" />
                             </Button>
@@ -463,7 +476,7 @@ export function BookingsPage() {
                               size="sm"
                               title="Delete Booking"
                               onClick={() => handleDelete(booking.id)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-red-600"
+                              className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                             </Button>

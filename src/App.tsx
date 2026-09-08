@@ -8,6 +8,7 @@ import { LoginPage } from "@/pages/LoginPage"
 import { OnboardingPage } from "@/pages/OnboardingPage"
 import { CalendarPage } from "@/pages/CalendarPage"
 import { BookingsPage } from "@/pages/BookingsPage"
+import { RevenuePage } from "@/pages/RevenuePage"
 import { GuestsPage } from "@/pages/GuestsPage"
 import { SettingsPage } from "@/pages/SettingsPage"
 
@@ -31,6 +32,7 @@ function App() {
                   <Route path="/" element={<Navigate to="/calendar" replace />} />
                   <Route path="/calendar" element={<CalendarPage />} />
                   <Route path="/bookings" element={<BookingsPage />} />
+                  <Route path="/revenue" element={<RevenuePage />} />
                   <Route path="/guests" element={<GuestsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                 </Route>

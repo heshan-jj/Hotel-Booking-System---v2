@@ -28,7 +28,7 @@ export function TabsList({
   return (
     <div
       className={cn(
-        "inline-flex h-10 items-center justify-center rounded-lg bg-slate-100 p-1 text-slate-500",
+        "inline-flex h-8.5 items-center justify-center rounded-lg bg-slate-200/60 dark:bg-zinc-800/70 p-0.5 text-slate-600 dark:text-zinc-400 border border-black/[0.04] dark:border-white/[0.04] select-none",
         className
       )}
       {...props}
@@ -59,10 +59,10 @@ export function TabsTrigger({
       aria-selected={isSelected}
       onClick={() => context.onValueChange(value)}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3.5 py-1.5 text-xs font-semibold ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-xs font-medium tracking-tight transition-all duration-150 select-none active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50",
         isSelected
-          ? "bg-white text-slate-900 shadow-xs"
-          : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50",
+          ? "bg-white dark:bg-zinc-900 text-slate-900 dark:text-white shadow-[0_1px_3px_rgba(0,0,0,0.08),0_1px_1px_rgba(0,0,0,0.04)] font-semibold"
+          : "text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200 hover:bg-black/[0.02]",
         className
       )}
       {...props}

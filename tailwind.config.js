@@ -52,9 +52,17 @@ export default {
         },
       },
       borderRadius: {
+        xl: "calc(var(--radius) + 4px)",
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        "ios-sm": "0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.02)",
+        "ios-card": "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.04)",
+        "ios-dropdown": "0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04)",
+        "ios-glass": "0 8px 32px 0 rgba(0, 0, 0, 0.06), inset 0 1px 0.5px rgba(255, 255, 255, 0.6)",
+        "ios-highlight": "inset 0 1px 0.5px rgba(255, 255, 255, 0.25)",
       },
       keyframes: {
         "accordion-down": {

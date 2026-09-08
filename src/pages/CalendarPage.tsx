@@ -131,18 +131,18 @@ export function CalendarPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Top Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-500/20">
-            <CalendarIcon className="h-5 w-5" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0071e3]/10 text-[#0071e3] border border-[#0071e3]/20 shadow-ios-sm">
+            <CalendarIcon className="h-4.5 w-4.5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-zinc-100">
               Reservations Calendar
             </h1>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400 font-normal">
               Interactive timeline of room occupancies and multi-channel bookings
             </p>
           </div>
@@ -153,18 +153,18 @@ export function CalendarPage() {
             type="button"
             onClick={() => refetch()}
             title="Refresh bookings"
-            className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50"
+            className="flex h-8 items-center gap-1.5 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm hover:bg-slate-50 active:scale-[0.98] transition-all"
           >
-            <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin" : ""}`} />
+            <RefreshCw className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
           </button>
 
           <button
             type="button"
             onClick={handleOpenCreateModal}
-            className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-blue-600/20 hover:bg-blue-500 active:scale-98"
+            className="flex h-8 items-center gap-1.5 rounded-lg bg-[#0071e3] px-3.5 text-xs font-semibold text-white shadow-[0_1px_2px_rgba(0,113,227,0.2),inset_0_1px_0.5px_rgba(255,255,255,0.25)] hover:bg-[#0077ed] active:bg-[#0062c4] active:scale-[0.98] transition-all"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5" />
             <span>New Booking</span>
           </button>
         </div>
@@ -172,14 +172,14 @@ export function CalendarPage() {
 
       {/* Database Empty Banner / Quick Seeder */}
       {rooms.length === 0 && !isLoading && (
-        <div className="flex flex-col items-start justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50/70 p-4 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 text-amber-800">
-              <BedDouble className="h-5 w-5" />
+        <div className="flex flex-col items-start justify-between gap-3 rounded-xl border border-amber-500/20 bg-amber-500/5 p-3.5 sm:flex-row sm:items-center shadow-ios-sm">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 border border-amber-500/20">
+              <BedDouble className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-amber-900">No hotel rooms configured yet</p>
-              <p className="text-xs text-amber-700">
+              <p className="text-xs font-semibold text-amber-900 dark:text-amber-300">No hotel rooms configured yet</p>
+              <p className="text-[11px] text-amber-700 dark:text-amber-400">
                 To start booking reservations, initialize sample rooms or create them in Settings.
               </p>
             </div>
@@ -188,12 +188,12 @@ export function CalendarPage() {
             type="button"
             disabled={createDefaultRoomsMutation.isPending}
             onClick={() => createDefaultRoomsMutation.mutate()}
-            className="flex items-center gap-1.5 rounded-lg bg-amber-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-amber-500 disabled:opacity-50"
+            className="flex h-7 items-center gap-1.5 rounded-lg bg-amber-600 px-3 text-xs font-medium text-white shadow-ios-sm hover:bg-amber-500 active:scale-[0.98] disabled:opacity-50 transition-all"
           >
             {createDefaultRoomsMutation.isPending ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              <Loader2 className="h-3 w-3 animate-spin" />
             ) : (
-              <Sparkles className="h-3.5 w-3.5" />
+              <Sparkles className="h-3 w-3" />
             )}
             Initialize Sample Rooms
           </button>
@@ -201,17 +201,17 @@ export function CalendarPage() {
       )}
 
       {/* Filters & Source Color Legend */}
-      <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-xs lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-3 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900/90 p-3 shadow-ios-sm lg:flex-row lg:items-center lg:justify-between">
         {/* Source Legend & Filter */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold text-slate-500">Source:</span>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-xs font-medium text-slate-400 mr-1">Source:</span>
           <button
             type="button"
             onClick={() => setSelectedSource("all")}
-            className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+            className={`rounded-md px-2 py-0.5 text-xs font-medium transition-all select-none ${
               selectedSource === "all"
-                ? "bg-slate-900 text-white shadow-xs"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-ios-sm font-semibold"
+                : "bg-black/[0.04] dark:bg-white/[0.06] text-slate-600 dark:text-zinc-400 hover:bg-black/[0.06]"
             }`}
           >
             All ({bookings.length})
@@ -225,22 +225,22 @@ export function CalendarPage() {
                 key={key}
                 type="button"
                 onClick={() => setSelectedSource(isSelected ? "all" : key)}
-                className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+                className={`flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-medium transition-all select-none border ${
                   isSelected
-                    ? "ring-2 ring-slate-900 ring-offset-1"
-                    : "hover:opacity-90"
+                    ? "ring-2 ring-slate-900 dark:ring-white ring-offset-1 font-semibold"
+                    : "border-black/[0.04] hover:opacity-90"
                 }`}
                 style={{
-                  backgroundColor: isSelected ? meta.hex : `${meta.hex}18`,
+                  backgroundColor: isSelected ? meta.hex : `${meta.hex}14`,
                   color: isSelected ? "#ffffff" : meta.hex,
                 }}
               >
                 <span
-                  className="h-2 w-2 rounded-full"
+                  className="h-1.5 w-1.5 rounded-full"
                   style={{ backgroundColor: isSelected ? "#ffffff" : meta.hex }}
                 />
                 <span>{meta.label}</span>
-                <span className="text-[10px] opacity-80">({count})</span>
+                <span className="text-[10px] opacity-75 font-mono">({count})</span>
               </button>
             )
           })}
@@ -249,11 +249,11 @@ export function CalendarPage() {
         {/* Room Filter */}
         <div className="flex items-center gap-2">
           <Filter className="h-3.5 w-3.5 text-slate-400" />
-          <span className="text-xs font-semibold text-slate-500">Room:</span>
+          <span className="text-xs font-medium text-slate-400">Room:</span>
           <select
             value={selectedRoomId}
             onChange={(e) => setSelectedRoomId(e.target.value)}
-            className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 focus:border-blue-500 focus:outline-none"
+            className="h-8 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 px-2.5 text-xs font-medium text-slate-700 dark:text-zinc-300 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] transition-all"
           >
             <option value="all">All Rooms ({rooms.length})</option>
             {rooms.map((room) => (
@@ -267,11 +267,11 @@ export function CalendarPage() {
 
       {/* Error state */}
       {isError && (
-        <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
+        <div className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50/80 p-3 text-xs text-rose-800 shadow-ios-sm">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
           <div>
             <p className="font-semibold">Failed to load reservations</p>
-            <p className="text-xs text-red-600">
+            <p className="text-[11px] text-rose-600">
               {(error as Error)?.message || "Please check your network and Supabase connection."}
             </p>
           </div>
@@ -279,7 +279,7 @@ export function CalendarPage() {
       )}
 
       {/* Calendar Area */}
-      <div className="relative overflow-hidden rounded-xl bg-white shadow-sm">
+      <div className="relative overflow-hidden rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-zinc-900 shadow-ios-card">
         {isLoading && (
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/70 backdrop-blur-xs">
             <div className="flex flex-col items-center gap-2">

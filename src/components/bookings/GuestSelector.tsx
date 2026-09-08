@@ -75,21 +75,21 @@ export function GuestSelector({
   }
 
   return (
-    <div className="space-y-2" ref={containerRef}>
-      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
-        Guest <span className="text-red-500">*</span>
+    <div className="space-y-1.5" ref={containerRef}>
+      <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+        Guest <span className="text-rose-500">*</span>
       </label>
 
       {/* If a guest is selected and not creating new */}
       {currentGuest && !isCreatingNew ? (
-        <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 p-3 shadow-xs">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <User className="h-5 w-5" />
+        <div className="flex items-center justify-between rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-slate-50/80 dark:bg-zinc-800/60 p-2.5 shadow-ios-sm">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0071e3]/10 text-[#0071e3] font-semibold text-xs border border-[#0071e3]/20">
+              {currentGuest.name ? currentGuest.name.charAt(0).toUpperCase() : <User className="h-4 w-4" />}
             </div>
             <div>
-              <p className="text-sm font-semibold text-slate-900">{currentGuest.name}</p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100 tracking-tight">{currentGuest.name}</p>
+              <p className="text-[11px] text-slate-400 dark:text-zinc-500 font-normal">
                 {[currentGuest.phone, currentGuest.email].filter(Boolean).join(" • ") ||
                   "No contact details"}
               </p>
@@ -101,32 +101,32 @@ export function GuestSelector({
               onSelectGuest(null)
               setIsOpen(true)
             }}
-            className="rounded-md border border-slate-300 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+            className="h-7 rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-white/90 dark:bg-zinc-900/90 px-2.5 text-xs font-medium text-slate-600 dark:text-zinc-300 shadow-ios-sm hover:bg-slate-50 active:scale-[0.98] transition-all"
           >
             Change
           </button>
         </div>
       ) : isCreatingNew ? (
         /* Inline New Guest Creation Form */
-        <div className="rounded-xl border border-blue-200 bg-blue-50/40 p-4 shadow-sm">
-          <div className="mb-3 flex items-center justify-between">
-            <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-900">
-              <UserPlus className="h-4 w-4" />
+        <div className="rounded-xl border border-[#0071e3]/20 bg-[#0071e3]/[0.03] p-3.5 shadow-ios-sm">
+          <div className="mb-2.5 flex items-center justify-between">
+            <h4 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0071e3]">
+              <UserPlus className="h-3.5 w-3.5" />
               New Guest Profile
             </h4>
             <button
               type="button"
               onClick={() => setIsCreatingNew(false)}
-              className="text-xs text-slate-500 hover:text-slate-800"
+              className="text-xs text-slate-500 hover:text-slate-800 dark:text-zinc-400"
             >
               Cancel
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label className="mb-1 block text-xs font-medium text-slate-700">
-                Full Name <span className="text-red-500">*</span>
+              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">
+                Full Name <span className="text-rose-500">*</span>
               </label>
               <input
                 type="text"
@@ -134,34 +134,34 @@ export function GuestSelector({
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 placeholder="e.g. Eleanor Vance"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Phone</label>
+              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Phone</label>
               <input
                 type="tel"
                 value={newPhone}
                 onChange={(e) => setNewPhone(e.target.value)}
                 placeholder="+1 555-0199"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Email</label>
+              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Email</label>
               <input
                 type="email"
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder="guest@example.com"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">
+              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">
                 Passport / ID Number
               </label>
               <input
@@ -169,29 +169,29 @@ export function GuestSelector({
                 value={newIdNumber}
                 onChange={(e) => setNewIdNumber(e.target.value)}
                 placeholder="N1234567"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Nationality</label>
+              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Nationality</label>
               <input
                 type="text"
                 value={newNationality}
                 onChange={(e) => setNewNationality(e.target.value)}
                 placeholder="e.g. British"
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="mb-1 block text-xs font-medium text-slate-700">Guest Notes</label>
+              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-zinc-400">Guest Notes</label>
               <textarea
                 rows={2}
                 value={newNotes}
                 onChange={(e) => setNewNotes(e.target.value)}
                 placeholder="VIP preferences, allergies, dietary requirements..."
-                className="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs tracking-tight text-foreground placeholder:text-slate-400 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/20"
               />
             </div>
           </div>
@@ -200,7 +200,7 @@ export function GuestSelector({
             <button
               type="button"
               onClick={() => setIsCreatingNew(false)}
-              className="rounded-md px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100"
+              className="h-7 rounded-lg px-3 text-xs font-medium text-slate-600 dark:text-zinc-400 hover:bg-black/[0.04] transition-colors"
             >
               Cancel
             </button>
@@ -208,9 +208,9 @@ export function GuestSelector({
               type="button"
               disabled={createGuestMutation.isPending || !newName.trim()}
               onClick={handleCreateGuest}
-              className="flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-1.5 text-xs font-medium text-white shadow-xs hover:bg-blue-500 disabled:opacity-50"
+              className="flex h-7 items-center gap-1.5 rounded-lg bg-[#0071e3] px-3 text-xs font-medium text-white shadow-ios-sm hover:bg-[#0077ed] active:scale-[0.98] disabled:opacity-50 transition-all"
             >
-              {createGuestMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+              {createGuestMutation.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
               Save & Select Guest
             </button>
           </div>
@@ -219,8 +219,8 @@ export function GuestSelector({
         /* Autocomplete Search Dropdown */
         <div className="relative">
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
-              <Search className="h-4 w-4" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
+              <Search className="h-3.5 w-3.5" />
             </div>
             <input
               type="text"
@@ -231,22 +231,22 @@ export function GuestSelector({
                 setIsOpen(true)
               }}
               placeholder="Search guest by name, email, or phone..."
-              className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-8 text-sm text-slate-900 placeholder-slate-400 shadow-xs focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="w-full rounded-lg border border-black/[0.09] dark:border-white/[0.1] bg-slate-50/80 dark:bg-zinc-800/60 py-1.5 pl-8 pr-8 text-xs tracking-tight text-foreground placeholder:text-slate-400 shadow-ios-sm focus:bg-white dark:focus:bg-zinc-900 focus-visible:outline-none focus-visible:border-[#0071e3] focus-visible:ring-2 focus-visible:ring-[#0071e3]/15 transition-all"
             />
             {searchTerm && (
               <button
                 type="button"
                 onClick={() => setSearchTerm("")}
-                className="absolute inset-y-0 right-0 flex items-center pr-2.5 text-slate-400 hover:text-slate-600"
+                className="absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400 hover:text-slate-600"
               >
-                <X className="h-4 w-4" />
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>
 
           {/* Results popover */}
           {isOpen && (
-            <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
+            <div className="absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-black/[0.08] dark:border-white/[0.1] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md p-1 shadow-ios-dropdown">
               {/* Option to create new guest */}
               <button
                 type="button"
@@ -255,19 +255,19 @@ export function GuestSelector({
                   setNewName(searchTerm)
                   setIsOpen(false)
                 }}
-                className="flex w-full items-center gap-2 border-b border-slate-100 px-4 py-2.5 text-left text-xs font-semibold text-blue-600 hover:bg-blue-50"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-semibold text-[#0071e3] hover:bg-[#0071e3]/10 transition-colors"
               >
-                <UserPlus className="h-4 w-4" />
+                <UserPlus className="h-3.5 w-3.5" />
                 <span>+ Create new guest {searchTerm ? `"${searchTerm}"` : ""}</span>
               </button>
 
               {isSearching ? (
-                <div className="flex items-center justify-center gap-2 py-4 text-xs text-slate-500">
-                  <Loader2 className="h-4 w-4 animate-spin text-blue-600" />
+                <div className="flex items-center justify-center gap-2 py-3 text-xs text-slate-400">
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#0071e3]" />
                   <span>Searching guests...</span>
                 </div>
               ) : guests.length === 0 ? (
-                <div className="px-4 py-4 text-center text-xs text-slate-500">
+                <div className="px-3 py-3 text-center text-xs text-slate-400">
                   No existing guests found. Click above to add a new guest.
                 </div>
               ) : (
@@ -282,19 +282,19 @@ export function GuestSelector({
                         setIsOpen(false)
                         setSearchTerm("")
                       }}
-                      className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition-colors hover:bg-slate-50 ${
-                        isSelected ? "bg-blue-50/70" : ""
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.04] ${
+                        isSelected ? "bg-[#0071e3]/10 text-[#0071e3]" : "text-slate-800 dark:text-zinc-200"
                       }`}
                     >
                       <div>
-                        <p className="font-medium text-slate-900">{guest.name}</p>
-                        <p className="text-xs text-slate-500">
+                        <p className="font-semibold">{guest.name}</p>
+                        <p className="text-[10px] text-slate-400">
                           {[guest.phone, guest.email, guest.nationality]
                             .filter(Boolean)
                             .join(" • ") || "No additional info"}
                         </p>
                       </div>
-                      {isSelected && <Check className="h-4 w-4 text-blue-600" />}
+                      {isSelected && <Check className="h-3.5 w-3.5 text-[#0071e3]" />}
                     </button>
                   )
                 })
