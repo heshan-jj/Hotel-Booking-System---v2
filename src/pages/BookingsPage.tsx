@@ -278,10 +278,10 @@ export function BookingsPage() {
           {/* Dropdown Filters */}
           <div className="flex flex-wrap items-center gap-2">
             {/* Status Filter */}
-            <div className="flex items-center gap-1.5 min-w-[130px]">
+            <div className="flex items-center gap-1.5 min-w-[140px]">
               <span className="text-xs font-medium text-slate-400 shrink-0">Status:</span>
               <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger className="h-8 w-32">
+                <SelectTrigger className="h-8 w-36">
                   <SelectValue placeholder="All Statuses" />
                 </SelectTrigger>
                 <SelectContent>
@@ -296,10 +296,10 @@ export function BookingsPage() {
             </div>
 
             {/* Source Filter */}
-            <div className="flex items-center gap-1.5 min-w-[130px]">
+            <div className="flex items-center gap-1.5 min-w-[140px]">
               <span className="text-xs font-medium text-slate-400 shrink-0">Source:</span>
               <Select value={selectedSource} onValueChange={setSelectedSource}>
-                <SelectTrigger className="h-8 w-32">
+                <SelectTrigger className="h-8 w-36">
                   <SelectValue placeholder="All Sources" />
                 </SelectTrigger>
                 <SelectContent>
@@ -314,10 +314,10 @@ export function BookingsPage() {
             </div>
 
             {/* Room Filter */}
-            <div className="flex items-center gap-1.5 min-w-[130px]">
+            <div className="flex items-center gap-1.5 min-w-[140px]">
               <span className="text-xs font-medium text-slate-400 shrink-0">Room:</span>
               <Select value={selectedRoomId} onValueChange={setSelectedRoomId}>
-                <SelectTrigger className="h-8 w-36">
+                <SelectTrigger className="h-8 w-40">
                   <SelectValue placeholder="All Rooms" />
                 </SelectTrigger>
                 <SelectContent>
