@@ -6,7 +6,6 @@ import { useQueryClient } from "@tanstack/react-query"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardHeader,
@@ -32,18 +31,15 @@ import {
   Coins,
 } from "lucide-react"
 import { SUPPORTED_CURRENCIES, getCurrencySymbol } from "@/constants/currencies"
+import { ThemeColorPicker } from "@/components/shared/ThemeColorPicker"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-// Curated theme color presets
-const COLOR_PRESETS = [
-  { name: "Slate Midnight", hex: "#0f172a" },
-  { name: "Royal Indigo", hex: "#4f46e5" },
-  { name: "Ocean Blue", hex: "#0284c7" },
-  { name: "Emerald Forest", hex: "#059669" },
-  { name: "Burgundy Wine", hex: "#be123c" },
-  { name: "Warm Amber", hex: "#d97706" },
-  { name: "Imperial Violet", hex: "#7c3aed" },
-  { name: "Earthy Bronze", hex: "#78350f" },
-]
 
 interface TempRoom {
   id: string
@@ -337,18 +333,18 @@ export function OnboardingPage() {
                     <Coins className="h-4 w-4 text-emerald-400" />
                     Base Currency <span className="text-blue-400">*</span>
                   </Label>
-                  <select
-                    id="hotelCurrency"
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    className="mt-2 flex h-10 w-full rounded-md border border-slate-700 bg-slate-800/80 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    {SUPPORTED_CURRENCIES.map((c) => (
-                      <option key={c.code} value={c.code} className="bg-slate-900 text-white">
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
+                  <Select value={currency} onValueChange={setCurrency}>
+                    <SelectTrigger id="hotelCurrency" className="mt-2 border-slate-700 bg-slate-800/80 text-white focus:ring-blue-500">
+                      <SelectValue placeholder="Select currency" />
+                    </SelectTrigger>
+                    <SelectContent className="border-slate-700 bg-slate-900 text-white">
+                      {SUPPORTED_CURRENCIES.map((c) => (
+                        <SelectItem key={c.code} value={c.code} className="hover:bg-slate-800 text-slate-200 focus:bg-slate-800 focus:text-white">
+                          {c.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <p className="mt-1 text-xs text-slate-500">
                     All room rates, reservation pricing, and extra charges will use this currency.
                   </p>
@@ -404,6 +400,7 @@ export function OnboardingPage() {
                           accept="image/png, image/jpeg, image/webp, image/svg+xml"
                           onChange={handleLogoFileChange}
                           disabled={isUploadingLogo}
+                          aria-label="Upload hotel logo"
                           className="sr-only"
                         />
                       </label>
@@ -440,114 +437,13 @@ export function OnboardingPage() {
                   Select your primary hotel brand color or specify a custom hex code.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Presets Grid */}
-                <div>
-                  <Label className="text-slate-200">Preset Color Palettes</Label>
-                  <div className="mt-2.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-                    {COLOR_PRESETS.map((preset) => {
-                      const isSelected = themeColor.toLowerCase() === preset.hex.toLowerCase()
-                      return (
-                        <button
-                          key={preset.hex}
-                          type="button"
-                          onClick={() => setThemeColor(preset.hex)}
-                          className={`flex items-center gap-2.5 rounded-xl border p-2.5 text-left transition-all ${
-                            isSelected
-                              ? "border-blue-500 bg-blue-500/10 ring-2 ring-blue-500/30"
-                              : "border-slate-800 bg-slate-800/60 hover:bg-slate-800 hover:border-slate-700"
-                          }`}
-                        >
-                          <span
-                            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg shadow-xs"
-                            style={{ backgroundColor: preset.hex }}
-                          >
-                            {isSelected && <Check className="h-3.5 w-3.5 text-white" />}
-                          </span>
-                          <span className="truncate text-xs font-medium text-slate-200">
-                            {preset.name}
-                          </span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-
-                {/* Custom Color Input */}
-                <div>
-                  <Label className="text-slate-200">Custom Brand Hex Color</Label>
-                  <div className="mt-2 flex items-center gap-3">
-                    <div className="relative">
-                      <input
-                        type="color"
-                        value={themeColor}
-                        onChange={(e) => setThemeColor(e.target.value)}
-                        className="h-10 w-14 cursor-pointer rounded-lg border border-slate-700 bg-slate-800 p-1"
-                      />
-                    </div>
-                    <Input
-                      type="text"
-                      value={themeColor}
-                      onChange={(e) => setThemeColor(e.target.value)}
-                      placeholder="#0f172a"
-                      className="max-w-[160px] font-mono uppercase border-slate-700 bg-slate-800/80 text-white focus-visible:ring-blue-500"
-                    />
-                    <Badge variant="outline" className="border-slate-700 text-slate-300">
-                      Live Color: {themeColor}
-                    </Badge>
-                  </div>
-                </div>
-
-                {/* Live Preview Card */}
-                <div className="rounded-xl border border-slate-700/80 bg-slate-950 p-4 shadow-inner">
-                  <div className="mb-3 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    <span>Live Theme Preview</span>
-                    <Badge variant="secondary" className="bg-slate-800 text-slate-300 text-[10px]">
-                      Real-time
-                    </Badge>
-                  </div>
-
-                  {/* Sample Mock Header */}
-                  <div
-                    className="flex items-center justify-between rounded-lg p-3 shadow-md transition-colors"
-                    style={{ backgroundColor: themeColor }}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/20 text-white">
-                        <Hotel className="h-4 w-4" />
-                      </div>
-                      <span className="text-sm font-bold text-white">
-                        {hotelName || "My Hotel"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="rounded-md bg-white/20 px-2 py-0.5 text-[11px] font-medium text-white">
-                        Dashboard
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Sample Action Button and Tag */}
-                  <div className="mt-3 flex items-center gap-3">
-                    <button
-                      type="button"
-                      className="rounded-lg px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors"
-                      style={{ backgroundColor: themeColor }}
-                    >
-                      Sample Action Button
-                    </button>
-                    <span
-                      className="rounded-full px-2.5 py-0.5 text-xs font-medium"
-                      style={{
-                        backgroundColor: `${themeColor}25`,
-                        color: themeColor,
-                        border: `1px solid ${themeColor}40`,
-                      }}
-                    >
-                      Active Pill Badge
-                    </span>
-                  </div>
-                </div>
+              <CardContent>
+                <ThemeColorPicker
+                  value={themeColor}
+                  onChange={setThemeColor}
+                  hotelName={hotelName}
+                  forceDark
+                />
               </CardContent>
               <CardFooter className="flex justify-between border-t border-slate-800/80 pt-4">
                 <Button

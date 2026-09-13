@@ -5,6 +5,7 @@ import { useBookings, useRooms, useCreateDefaultRoom } from "@/hooks/useBookings
 import { BookingModal } from "@/components/bookings/BookingModal"
 import { BOOKING_SOURCES } from "@/constants/booking"
 import type { BookingWithDetails, BookingSource } from "@/types/booking"
+import { getReadableTextColor } from "@/lib/colorUtils"
 import {
   Calendar as CalendarIcon,
   Plus,
@@ -94,11 +95,12 @@ export function CalendarPage() {
   const eventPropGetter = (event: CalendarBookingEvent) => {
     const meta =
       BOOKING_SOURCES[event.booking.source as BookingSource] || BOOKING_SOURCES.direct
+    const textColor = getReadableTextColor(meta.hex)
     return {
       style: {
         backgroundColor: meta.hex,
         borderColor: meta.hex,
-        color: "#ffffff",
+        color: textColor,
         borderRadius: "6px",
         fontSize: "0.8125rem",
         fontWeight: "500",
@@ -228,6 +230,7 @@ export function CalendarPage() {
           {Object.entries(BOOKING_SOURCES).map(([key, meta]) => {
             const isSelected = selectedSource === key
             const count = bookings.filter((b) => b.source === key).length
+            const textColor = isSelected ? getReadableTextColor(meta.hex) : meta.hex
             return (
               <button
                 key={key}
@@ -240,12 +243,12 @@ export function CalendarPage() {
                 }`}
                 style={{
                   backgroundColor: isSelected ? meta.hex : `${meta.hex}14`,
-                  color: isSelected ? "#ffffff" : meta.hex,
+                  color: textColor,
                 }}
               >
                 <span
                   className="h-1.5 w-1.5 rounded-full"
-                  style={{ backgroundColor: isSelected ? "#ffffff" : meta.hex }}
+                  style={{ backgroundColor: textColor }}
                 />
                 <span>{meta.label}</span>
                 <span className="text-xs opacity-75 font-mono">({count})</span>

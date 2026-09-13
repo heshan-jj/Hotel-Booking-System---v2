@@ -63,7 +63,7 @@ export function AppLayout() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="flex md:hidden h-8 w-8 items-center justify-center rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-white/80 dark:bg-zinc-900/80 text-slate-700 dark:text-zinc-300 shadow-ios-sm active:scale-95 transition-all mr-1"
+              className="flex md:hidden h-11 w-11 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-black/[0.08] dark:border-white/[0.1] bg-white/80 dark:bg-zinc-900/80 text-slate-700 dark:text-zinc-300 shadow-ios-sm active:scale-95 transition-all mr-1"
               aria-label="Open menu"
               title="Open menu"
             >
@@ -99,7 +99,8 @@ export function AppLayout() {
               type="button"
               onClick={() => signOut()}
               title={`Sign out (${user?.email})`}
-              className="flex md:hidden h-7 w-7 items-center justify-center rounded-full border border-black/[0.08] bg-white/80 text-slate-500 hover:text-rose-600 active:scale-95 transition-all shadow-ios-sm"
+              aria-label="Sign out"
+              className="flex md:hidden h-11 w-11 sm:h-7 sm:w-7 items-center justify-center rounded-full border border-black/[0.08] dark:border-white/[0.1] bg-white/80 dark:bg-zinc-900/80 text-slate-500 hover:text-rose-600 active:scale-95 transition-all shadow-ios-sm"
             >
               <LogOut className="h-3.5 w-3.5" />
             </button>

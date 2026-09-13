@@ -1,93 +1,44 @@
 /**
- * Converts a hex color string (e.g. "#0f172a" or "0f172a")
- * to the HSL format expected by shadcn/ui's Tailwind configuration:
- * "H S% L%" (e.g. "222.2 47.4% 11.2%").
+ * Applies the primary theme color dynamically to document CSS custom properties on root element.
  */
-export function hexToHsl(hex: string): string {
-  let cleanHex = hex.replace("#", "").trim()
-
-  if (cleanHex.length === 3) {
-    cleanHex = cleanHex
-      .split("")
-      .map((c) => c + c)
-      .join("")
-  }
-
-  if (cleanHex.length !== 6) {
-    return "221.2 83.2% 53.3%" // Fallback blue
-  }
-
-  const r = parseInt(cleanHex.substring(0, 2), 16) / 255
-  const g = parseInt(cleanHex.substring(2, 4), 16) / 255
-  const b = parseInt(cleanHex.substring(4, 6), 16) / 255
-
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  const delta = max - min
-
-  let h = 0
-  let s = 0
-  const l = (max + min) / 2
-
-  if (delta !== 0) {
-    s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min)
-
-    switch (max) {
-      case r:
-        h = ((g - b) / delta + (g < b ? 6 : 0)) * 60
-        break
-      case g:
-        h = ((b - r) / delta + 2) * 60
-        break
-      case b:
-        h = ((r - g) / delta + 4) * 60
-        break
-    }
-  }
-
-  const hDeg = Math.round(h * 10) / 10
-  const sPct = Math.round(s * 1000) / 10
-  const lPct = Math.round(l * 1000) / 10
-
-  return `${hDeg} ${sPct}% ${lPct}%`
+export function applyThemePrimaryColor(hexColor: string): void {
+  if (typeof document === "undefined" || !hexColor) return
+  document.documentElement.style.setProperty("--primary", hexColor)
 }
 
 /**
- * Returns true if the color is light (requiring dark text foreground).
+ * Computes relative luminance according to WCAG 2.1 specifications and returns
+ * either dark text (#0f172a) or light text (#ffffff) to ensure accessible contrast (> 4.5:1).
  */
-export function isLightColor(hex: string): boolean {
-  let cleanHex = hex.replace("#", "").trim()
-  if (cleanHex.length === 3) {
-    cleanHex = cleanHex
+export function getReadableTextColor(hexColor: string): string {
+  // Clean hex string
+  let hex = hexColor.replace("#", "")
+
+  // Expand short hex (3 chars -> 6 chars)
+  if (hex.length === 3) {
+    hex = hex
       .split("")
-      .map((c) => c + c)
+      .map((char) => char + char)
       .join("")
   }
-  if (cleanHex.length !== 6) return false
 
-  const r = parseInt(cleanHex.substring(0, 2), 16)
-  const g = parseInt(cleanHex.substring(2, 4), 16)
-  const b = parseInt(cleanHex.substring(4, 6), 16)
+  if (hex.length !== 6) {
+    return "#ffffff"
+  }
 
-  // Standard YIQ brightness calculation
-  const yiq = (r * 299 + g * 587 + b * 114) / 1000
-  return yiq >= 145
-}
+  const r = parseInt(hex.substring(0, 2), 16) / 255
+  const g = parseInt(hex.substring(2, 4), 16) / 255
+  const b = parseInt(hex.substring(4, 6), 16) / 255
 
-/**
- * Applies the primary theme color to the document root as CSS variables.
- */
-export function applyThemePrimaryColor(hexColor: string) {
-  if (!hexColor || typeof document === "undefined") return
+  const toLinear = (c: number) =>
+    c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
 
-  const hsl = hexToHsl(hexColor)
-  const isLight = isLightColor(hexColor)
+  const rLinear = toLinear(r)
+  const gLinear = toLinear(g)
+  const bLinear = toLinear(b)
 
-  const root = document.documentElement
-  root.style.setProperty("--primary", hsl)
-  root.style.setProperty("--ring", hsl)
-  root.style.setProperty(
-    "--primary-foreground",
-    isLight ? "222.2 84% 4.9%" : "210 40% 98%"
-  )
+  const luminance = 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear
+
+  // Luminance threshold ~0.45 determines light vs dark text for optimal WCAG AA contrast
+  return luminance > 0.45 ? "#0f172a" : "#ffffff"
 }

@@ -40,6 +40,9 @@ import {
   CheckCircle2,
   LogOut as LogOutIcon,
   Loader2,
+  AlertCircle,
+  Check,
+  X,
 } from "lucide-react"
 
 export function BookingsPage() {
@@ -58,6 +61,10 @@ export function BookingsPage() {
   const [selectedStatus, setSelectedStatus] = useState("all")
   const [selectedSource, setSelectedSource] = useState("all")
   const [selectedRoomId, setSelectedRoomId] = useState("all")
+
+  // Inline Delete State & Action Error Banner State
+  const [confirmingDeleteId, setConfirmingDeleteId] = useState<string | null>(null)
+  const [actionError, setActionError] = useState<string | null>(null)
 
   // Quick stats calculation
   const stats = useMemo(() => {
@@ -120,6 +127,7 @@ export function BookingsPage() {
   }
 
   const handleStatusChange = async (bookingId: string, newStatus: string) => {
+    setActionError(null)
     try {
       await updateBookingMutation.mutateAsync({
         id: bookingId,
@@ -127,18 +135,18 @@ export function BookingsPage() {
       })
     } catch (err) {
       console.error("Status update error:", err)
-      alert("Failed to update status: " + (err as Error).message)
+      setActionError((err as Error).message || "Failed to update reservation status.")
     }
   }
 
-  const handleDelete = async (bookingId: string) => {
-    if (confirm("Are you sure you want to delete this reservation?")) {
-      try {
-        await deleteBookingMutation.mutateAsync(bookingId)
-      } catch (err) {
-        console.error("Delete booking error:", err)
-        alert("Failed to delete booking: " + (err as Error).message)
-      }
+  const handleConfirmDelete = async (bookingId: string) => {
+    setActionError(null)
+    try {
+      await deleteBookingMutation.mutateAsync(bookingId)
+      setConfirmingDeleteId(null)
+    } catch (err) {
+      console.error("Delete booking error:", err)
+      setActionError((err as Error).message || "Failed to delete reservation.")
     }
   }
 
@@ -152,6 +160,24 @@ export function BookingsPage() {
 
   return (
     <div className="space-y-5 max-w-7xl">
+      {/* Action Error Banner */}
+      {actionError && (
+        <div className="flex items-start justify-between gap-2 rounded-xl border border-red-200 dark:border-red-800/50 bg-red-50 dark:bg-red-950/40 p-4 text-xs font-semibold text-red-800 dark:text-red-300">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 shrink-0" />
+            <span>{actionError}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setActionError(null)}
+            className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-200"
+            aria-label="Dismiss error"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
       {/* Top Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
@@ -309,7 +335,7 @@ export function BookingsPage() {
       </div>
 
       {/* Bookings Table */}
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden dark:bg-zinc-900/90 dark:border-white/[0.08]">
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex items-center justify-center py-16 text-xs text-slate-400 gap-2">
@@ -334,15 +360,15 @@ export function BookingsPage() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Guest</TableHead>
-                    <TableHead>Room</TableHead>
-                    <TableHead>Stay Dates</TableHead>
-                    <TableHead>Nights</TableHead>
-                    <TableHead>Source</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableRow className="dark:border-white/[0.08] dark:bg-zinc-800/60">
+                    <TableHead className="dark:text-zinc-300">Guest</TableHead>
+                    <TableHead className="dark:text-zinc-300">Room</TableHead>
+                    <TableHead className="dark:text-zinc-300">Stay Dates</TableHead>
+                    <TableHead className="dark:text-zinc-300">Nights</TableHead>
+                    <TableHead className="dark:text-zinc-300">Source</TableHead>
+                    <TableHead className="dark:text-zinc-300">Status</TableHead>
+                    <TableHead className="dark:text-zinc-300">Price</TableHead>
+                    <TableHead className="text-right dark:text-zinc-300">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -352,7 +378,7 @@ export function BookingsPage() {
                     const nights = calculateNights(booking.check_in, booking.check_out)
 
                     return (
-                      <TableRow key={booking.id}>
+                      <TableRow key={booking.id} className="dark:border-white/[0.08]">
                         {/* Guest */}
                         <TableCell>
                           <div className="flex items-center gap-2.5">
@@ -384,14 +410,14 @@ export function BookingsPage() {
                         <TableCell>
                           <div className="text-xs font-medium text-slate-800 dark:text-zinc-200 font-mono">
                             <span>{booking.check_in}</span>
-                            <span className="mx-1 text-slate-300">→</span>
+                            <span className="mx-1 text-slate-300 dark:text-zinc-600">→</span>
                             <span>{booking.check_out}</span>
                           </div>
                         </TableCell>
 
                         {/* Nights */}
                         <TableCell>
-                          <Badge variant="secondary" className="text-xs font-mono">
+                          <Badge variant="secondary" className="text-xs font-mono dark:bg-zinc-800 dark:text-zinc-300">
                             {nights} {nights === 1 ? "night" : "nights"}
                           </Badge>
                         </TableCell>
@@ -433,7 +459,7 @@ export function BookingsPage() {
                             {formatPrice(booking.total_price)}
                           </div>
                           {Number(booking.extra_charges || 0) > 0 && (
-                            <div className="text-xs text-amber-600 font-medium">
+                            <div className="text-xs text-amber-600 dark:text-amber-400 font-medium">
                               +{formatPrice(booking.extra_charges)} extras
                             </div>
                           )}
@@ -441,55 +467,87 @@ export function BookingsPage() {
 
                         {/* Actions */}
                         <TableCell className="text-right">
-                          <div className="flex items-center justify-end gap-1">
-                            {/* Quick Status Toggles */}
-                            {booking.status === "confirmed" && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                title="Check In Guest"
-                                onClick={() => handleStatusChange(booking.id, "checked_in")}
-                                className="h-7 text-xs gap-1 text-primary hover:bg-primary/10"
-                              >
-                                <CheckCircle2 className="h-3 w-3" />
-                                <span className="hidden sm:inline">Check In</span>
-                              </Button>
+                          <div className="flex items-center justify-end gap-2 sm:gap-1.5">
+                            {confirmingDeleteId === booking.id ? (
+                              <div className="flex items-center gap-1">
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  title="Confirm Delete"
+                                  aria-label="Confirm reservation deletion"
+                                  onClick={() => handleConfirmDelete(booking.id)}
+                                  className="h-11 px-3.5 sm:h-8 sm:px-2.5 text-xs gap-1"
+                                >
+                                  <Check className="h-3.5 w-3.5" />
+                                  <span className="hidden sm:inline">Confirm</span>
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  title="Cancel"
+                                  aria-label="Cancel deletion"
+                                  onClick={() => setConfirmingDeleteId(null)}
+                                  className="h-11 px-3 sm:h-8 sm:px-2 text-xs dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-300"
+                                >
+                                  <X className="h-3.5 w-3.5" />
+                                </Button>
+                              </div>
+                            ) : (
+                              <>
+                                {/* Quick Status Toggles */}
+                                {booking.status === "confirmed" && (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    title="Check In Guest"
+                                    aria-label="Check in guest"
+                                    onClick={() => handleStatusChange(booking.id, "checked_in")}
+                                    className="h-11 px-3 sm:h-8 sm:px-2.5 text-xs gap-1 text-primary hover:bg-primary/10"
+                                  >
+                                    <CheckCircle2 className="h-3.5 w-3.5" />
+                                    <span className="hidden sm:inline">Check In</span>
+                                  </Button>
+                                )}
+
+                                {booking.status === "checked_in" && (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    title="Check Out Guest"
+                                    aria-label="Check out guest"
+                                    onClick={() => handleStatusChange(booking.id, "checked_out")}
+                                    className="h-11 px-3 sm:h-8 sm:px-2.5 text-xs gap-1 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100 hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
+                                  >
+                                    <LogOutIcon className="h-3.5 w-3.5" />
+                                    <span className="hidden sm:inline">Check Out</span>
+                                  </Button>
+                                )}
+
+                                {/* Edit Action */}
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  title="Edit Details"
+                                  aria-label="Edit reservation"
+                                  onClick={() => handleEdit(booking)}
+                                  className="h-11 w-11 sm:h-8 sm:w-8 p-0 text-slate-400 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-100"
+                                >
+                                  <Edit className="h-3.5 w-3.5" />
+                                </Button>
+
+                                {/* Delete Action */}
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  title="Delete Booking"
+                                  aria-label="Delete reservation"
+                                  onClick={() => setConfirmingDeleteId(booking.id)}
+                                  className="h-11 w-11 sm:h-8 sm:w-8 p-0 text-slate-400 hover:text-rose-600 dark:text-zinc-500 dark:hover:text-rose-400"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </Button>
+                              </>
                             )}
-
-                            {booking.status === "checked_in" && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                title="Check Out Guest"
-                                onClick={() => handleStatusChange(booking.id, "checked_out")}
-                                className="h-7 text-xs gap-1 text-slate-600 hover:text-slate-900 hover:bg-black/[0.04]"
-                              >
-                                <LogOutIcon className="h-3 w-3" />
-                                <span className="hidden sm:inline">Check Out</span>
-                              </Button>
-                            )}
-
-                            {/* Edit Action */}
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              title="Edit Details"
-                              onClick={() => handleEdit(booking)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-slate-800"
-                            >
-                              <Edit className="h-3.5 w-3.5" />
-                            </Button>
-
-                            {/* Delete Action */}
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              title="Delete Booking"
-                              onClick={() => handleDelete(booking.id)}
-                              className="h-7 w-7 p-0 text-slate-400 hover:text-rose-600"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </Button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -514,3 +572,4 @@ export function BookingsPage() {
     </div>
   )
 }
+

@@ -2,6 +2,9 @@ import React, { useState } from "react"
 import { useNavigate, useLocation, Navigate } from "react-router-dom"
 import { useAuth } from "@/contexts/AuthContext"
 import { Hotel, Lock, Mail, AlertCircle, Loader2 } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
 
 export function LoginPage() {
   const { user, signInWithPassword, isLoading: authLoading } = useAuth()
@@ -65,42 +68,46 @@ export function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-slate-300">
+              <Label htmlFor="loginEmail" className="mb-1.5 block text-xs font-medium text-slate-300">
                 Staff / Admin Email
-              </label>
+              </Label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                   <Mail className="h-4 w-4" />
                 </div>
-                <input
+                <Input
+                  id="loginEmail"
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="staff@hotel.com"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/80 py-2.5 pl-10 pr-3 text-sm text-white placeholder-slate-500 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                  className="pl-10 border-slate-700 bg-slate-800/80 text-white placeholder:text-slate-500 focus-visible:ring-blue-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-slate-300">Password</label>
+              <Label htmlFor="loginPassword" className="mb-1.5 block text-xs font-medium text-slate-300">
+                Password
+              </Label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
                   <Lock className="h-4 w-4" />
                 </div>
-                <input
+                <Input
+                  id="loginPassword"
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800/80 py-2.5 pl-10 pr-3 text-sm text-white placeholder-slate-500 outline-none transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                  className="pl-10 border-slate-700 bg-slate-800/80 text-white placeholder:text-slate-500 focus-visible:ring-blue-500"
                 />
               </div>
             </div>
 
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-600/30 transition-all hover:bg-blue-500 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
@@ -113,7 +120,7 @@ export function LoginPage() {
               ) : (
                 <span>Sign In</span>
               )}
-            </button>
+            </Button>
           </form>
 
           {/* Footer note */}
@@ -125,3 +132,4 @@ export function LoginPage() {
     </div>
   )
 }
+

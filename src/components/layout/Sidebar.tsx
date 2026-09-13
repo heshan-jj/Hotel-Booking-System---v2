@@ -69,8 +69,8 @@ export function Sidebar({ className = "", onItemClick, onClose, isMobileDrawer =
           <button
             type="button"
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-500 hover:text-slate-800 dark:text-zinc-400 transition-colors active:scale-95"
-            aria-label="Close menu"
+            className="flex h-11 w-11 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-500 hover:text-slate-800 dark:text-zinc-400 transition-colors active:scale-95"
+            aria-label="Close sidebar menu"
           >
             <X className="h-4 w-4" />
           </button>

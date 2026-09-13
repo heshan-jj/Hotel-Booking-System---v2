@@ -31,6 +31,8 @@ import {
   Ban,
 } from "lucide-react"
 
+import { useFocusTrap } from "@/hooks/useFocusTrap"
+
 interface BookingModalProps {
   isOpen: boolean
   onClose: () => void
@@ -46,6 +48,7 @@ export function BookingModal({
   initialDates,
   initialGuest,
 }: BookingModalProps) {
+  const dialogRef = useFocusTrap<HTMLDivElement>(isOpen, onClose)
   const isEditing = Boolean(initialBooking)
 
   const { data: rooms = [], isLoading: isLoadingRooms } = useRooms()
@@ -351,16 +354,25 @@ export function BookingModal({
     }
   }
 
+  if (!isOpen) return null
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 p-0 sm:p-4 backdrop-blur-sm transition-opacity">
-      <div className="relative w-full sm:max-w-xl rounded-t-[28px] sm:rounded-2xl border-t sm:border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-zinc-900 shadow-2xl transition-all max-h-[92vh] sm:max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        aria-labelledby="booking-modal-title"
+        className="relative w-full sm:max-w-xl rounded-t-[28px] sm:rounded-2xl border-t sm:border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-zinc-900 shadow-2xl transition-all max-h-[92vh] sm:max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-200 outline-none"
+      >
         {/* iOS Pull indicator for mobile */}
         <div className="w-10 h-1 rounded-full bg-slate-300 dark:bg-zinc-700 mx-auto mt-2.5 mb-1 sm:hidden shrink-0" />
 
         {/* Header */}
         <div className="flex items-center justify-between border-b border-black/[0.05] dark:border-white/[0.06] px-5 sm:px-6 py-3 shrink-0 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md select-none">
           <div>
-            <h3 className="text-base font-semibold text-slate-900 dark:text-zinc-100 tracking-tight">
+            <h3 id="booking-modal-title" className="text-base font-semibold text-slate-900 dark:text-zinc-100 tracking-tight">
               {isEditing ? "Edit Reservation" : "Create New Booking"}
             </h3>
             <p className="text-xs text-slate-400 dark:text-zinc-500 font-normal">
@@ -372,7 +384,8 @@ export function BookingModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-500 hover:text-slate-800 dark:text-zinc-400 transition-colors active:scale-95"
+            aria-label="Close reservation modal"
+            className="flex h-11 w-11 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-500 hover:text-slate-800 dark:text-zinc-400 transition-colors active:scale-95"
           >
             <X className="h-4 w-4" />
           </button>
